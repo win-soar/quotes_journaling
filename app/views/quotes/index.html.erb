@@ -1,0 +1,11 @@
+<h1>Quotes Journaling</h1>
+
+<% @quotes.each do |quote| %>
+  <div>
+    <strong><%= quote.user.name %></strong>
+    <blockquote><%= quote.title %></blockquote>
+    <small> - <%= quote.author %></small><br>
+    <%= quote.created_at.strftime("%Y^%m-%d %H:%M") %>
+  </div>
+  <hr>
+<% end %>
