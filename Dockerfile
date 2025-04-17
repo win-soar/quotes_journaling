@@ -28,7 +28,8 @@ RUN apt-get update -qq && \
     curl \
     default-mysql-client \
     build-essential \
-    libpq-dev
+    libpq-dev \
+    nodejs
 
 # Install JavaScript dependencies
 ARG NODE_VERSION=16.19.0
@@ -70,9 +71,10 @@ COPY --from=build /rails /rails
 RUN apt-get update -qq && apt-get install -y postgresql-client
 
 # Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
+RUN mkdir -p db log storage tmp && \
+    useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
-USER rails:rails
+# USER rails:rails
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
