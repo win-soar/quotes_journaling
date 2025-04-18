@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post   'login',  to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   resources :users, only: [:new, :create]
-  resources :quotes, only: [:index, :create]
+  resources :quotes, only: [:new, :index, :create]
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
