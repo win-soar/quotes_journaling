@@ -2,15 +2,13 @@ class Quote < ApplicationRecord
   belongs_to :user
   has_many :like_quotes
   has_many :comments
-  has_one :title
-  has_one :author
-  has_one :note
-  has_one :source
-  has_one :source_writer
-  has_one :category
 
-  validates :title, presence: true
-  validates :author, presence: true
-  validates :note, presence: true
-  validates :category, presence: true
+  validates :title, :author, :note, :category, presence: true
+
+  enum category: {
+    historical: 1,
+    celebrity: 2,
+    fictional: 3,
+    original: 4
+  }
 end

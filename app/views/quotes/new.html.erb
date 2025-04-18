@@ -1,0 +1,22 @@
+<h1>クォーツを投稿</h1>
+
+<%= form_with model: @quote, local: true do |form| %>
+  <div><%= form.label :title, 'Your Quotes' %><br><%= form.text_area :title, rows: 3, cols:50 %></div><br>
+  <div>
+    <%= form.label :category, 'Quotes type' %><br>
+    <% Quote.categories.each do |key, value| %>
+      <label style ="display: inline-block; margin-right: 1em;">
+        <%= form.radio_button :category, key %>
+        <%= key.humanize %>
+      </label>
+    <% end %>
+  </div><br>
+  <div><%= form.label :author, 'Author of the Quotes' %><br><%= form.text_field :author %></div><br>
+  <div><%= form.label :source, 'Source of the Quotes' %><br><%= form.text_field :source %></div><br>
+  <div><%= form.label :source_writer, 'writer' %><br><%= form.text_field :source_writer %></div><br>
+  <div><%= form.label :note, 'note' %><br><%= form.text_area :note, rows: 10, cols:50 %></div><br>
+
+  <div><%= form.submit '投稿する' %></div><br>
+
+  <%= link_to '戻る', root_path %>
+<% end %>
