@@ -1,5 +1,9 @@
 <h1>Quotes Journaling</h1>
 
+<div style="text-align: right;">
+  <%= button_to 'ログアウト', logout_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'btn btn-danger' %>
+</div>
+
 <div>
   <%= link_to 'クォーツを投稿する', new_quote_path, class: 'btn btn-primary' %>
 </div>
