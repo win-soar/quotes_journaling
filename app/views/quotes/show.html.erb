@@ -1,0 +1,13 @@
+<h1>Quotes Journaling</h1>
+
+<h2><%= @quote.title %></h2>
+<p><strong>投稿者:</strong> <%= @quote.user.name %></p><br>
+
+<p><strong>Author of the Quotes:</strong> <%= @quote.author %></p>
+<p><strong>Quotes type:</strong> <%= @quote.category %></p>
+<% if @quote.source.present? %>
+  <p><strong>Source of the Quotes:</strong> <%= @quote.source %>（<%= @quote.source_writer %>）</p>
+<% end %>
+<p><strong>note:</strong><br><%= simple_format(@quote.note) %></p>
+
+<%= link_to "戻る", quotes_path, class: "btn btn-secondary" %>

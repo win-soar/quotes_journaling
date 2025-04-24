@@ -15,6 +15,10 @@ class QuotesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def show
+    @quote = Quote.find(params[:id])
+  end
 end
 
 private
