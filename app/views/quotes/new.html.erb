@@ -1,4 +1,8 @@
-<h1>クォーツを投稿</h1>
+<h1>Quotes Journaling</h1><br>
+
+<h2>クォーツを投稿</h2><br>
+
+<%= render 'shared/error_messages', object: @quote %>
 
 <%= form_with model: @quote, local: true do |form| %>
   <div><%= form.label :title, 'Your Quotes' %><br><%= form.text_area :title, rows: 3, cols:50 %></div><br>

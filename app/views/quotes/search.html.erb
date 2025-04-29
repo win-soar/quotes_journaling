@@ -1,0 +1,44 @@
+<h1>Explore</h1>
+
+<br>
+
+<%= form_with url: search_result_quotes_path, method: :get, local:true do |form| %>
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title, placeholder: "クォーツで検索" %>
+  </div><br>
+
+  <div>
+    <%= form.label :author %>
+    <%= form.text_field :author, placeholder: "発言者で検索" %>
+  </div><br>
+
+  <div>
+    <%= form.label :category, "カテゴリーを選択" %><br>
+    <% Quote.categories.each_key do |category| %>
+      <%= form.radio_button :category, category %>
+      <%= form.label "category_#{category}", category.humanize %><br>
+    <% end %>
+  </div><br>
+
+  <div>
+    <%= form.label :note %>
+    <%= form.text_field :note, placeholder: "紹介内容で検索" %>
+  </div><br>
+
+  <div>
+    <%= form.label :source %>
+    <%= form.text_field :source, placeholder: "出典で検索" %>
+  </div><br>
+
+  <div>
+    <%= form.label :source_writer %>
+    <%= form.text_field :source_writer, placeholder: "出典の著者で検索" %>
+  </div><br>
+
+  <div>
+    <%= form.submit "Explore" %>
+  </div><br>
+
+  <%= link_to '戻る', root_path %>
+<% end %>
