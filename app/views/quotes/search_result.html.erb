@@ -1,0 +1,53 @@
+<h1>Quotes Journaling</h1>
+
+<div style="text-align: right;">
+  <%= button_to 'ログアウト', logout_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'btn btn-danger' %>
+</div>
+
+<div>
+  <%= link_to 'クォーツを投稿する', new_quote_path, class: 'btn btn-primary' %>
+  <%= link_to '検索画面', search_quotes_path, class: 'btn btn-primary' %>
+</div>
+<br>
+
+<ul>
+  <% if params[:title].present? %>
+    <li>Title: <%= params[:title] %></li>
+  <% end %>
+
+  <% if params[:author].present? %>
+    <li>Author: <%= params[:author] %></li>
+  <% end %>
+
+  <% if params[:category].present? %>
+    <li>Category: <%= params[:category].humanize %></li>
+  <% end %>
+
+  <% if params[:note].present? %>
+    <li>Note: <%= params[:note] %></li>
+  <% end %>
+
+  <% if params[:source].present? %>
+    <li>Source: <%= params[:source] %></li>
+  <% end %>
+
+  <% if params[:source_writer].present? %>
+    <li>Source writer: <%= params[:source_writer] %></li>
+  <% end %>
+</ul>
+
+<%= link_to '検索条件をクリア', root_path, class: 'btn btn-secondary' %>
+
+<% if @quotes.present? && @quotes.any? %>
+  <% @quotes.each do |quote| %>
+    <div>
+      <strong><%= quote.user.name %></strong>
+      <blockquote><%= link_to quote.title, quote_path(quote) %></blockquote>
+      <small> - <%= quote.author %></small><br>
+      <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
+    </div>
+  <% end %>
+  <hr>
+<% else %>
+  <p>検索結果が見つかりませんでした。</p>
+<% end %>

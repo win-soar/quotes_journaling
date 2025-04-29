@@ -19,6 +19,32 @@ class QuotesController < ApplicationController
   def show
     @quote = Quote.find(params[:id])
   end
+
+  def search
+  end
+
+  def search_result
+    @quotes = Quote.all
+    if params[:title].present?
+      @quotes = @quotes.where("title ILIKE ?", "%#{params[:title]}%")
+    end
+    if params[:author].present?
+      @quotes = @quotes.where("author ILIKE ?", "%#{params[:author]}%")
+    end
+    if params[:category].present?
+      @quotes = @quotes.where(category: Quote.categories[params[:category]])
+    end
+    if params[:note].present?
+      @quotes = @quotes.where("note ILIKE ?", "%#{params[:note]}%")
+    end
+    if params[:source].present?
+      @quotes = @quotes.where("source ILIKE ?", "%#{params[:source]}%")
+    end
+    if params[:source_writer].present?
+      @quotes = @quotes.where("source_writer ILIKE ?", "%#{params[:source_writer]}%")
+    end
+
+  end
 end
 
 private
