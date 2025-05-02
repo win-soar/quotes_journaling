@@ -1,4 +1,4 @@
-<h1>Quotes Journaling</h1>
+<h1><%= link_to 'Quotes Journaling', root_path %></h1><br>
 
 <div style="text-align: right;">
   <%= button_to 'ログアウト', logout_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'btn btn-danger' %>
@@ -12,7 +12,7 @@
 
 <% @quotes.each do |quote| %>
   <div>
-    <strong><%= quote.user.name %></strong>
+    <blockquote><%= link_to quote.user.name, user_path(quote.user) %></blockquote>
     <blockquote><%= link_to quote.title, quote_path(quote) %></blockquote>
     <small> - <%= quote.author %></small><br>
     <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
