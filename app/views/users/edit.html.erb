@@ -1,0 +1,19 @@
+<h1><%= link_to 'Quotes Journaling', root_path %></h1><br>
+
+<h2>プロフィールを編集</h2><br>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <div>
+    <%= form.label :name, 'ユーザー名' %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :bio, '自己紹介' %><br>
+    <%= form.text_area :bio, rows: 10, cols: 50 %>
+  </div>
+
+  <div>
+    <%= form.submit '更新する' %>
+  </div>
+<% end %>
