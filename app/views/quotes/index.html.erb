@@ -10,8 +10,8 @@
 
 <% @quotes.each do |quote| %>
   <div>
-    <blockquote><%= link_to quote.user.name, user_path(quote.user) %></blockquote>
-    <blockquote><%= link_to quote.title, quote_path(quote) %></blockquote>
+    <p><%= link_to quote.user.name, user_path(quote.user) %></p>
+    <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>
     <small> - <%= quote.author %></small><br>
     <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
   </div>
