@@ -22,6 +22,11 @@
   <div><%= form.label :source_writer, 'writer (出典の著者)' %><br><%= form.text_field :source_writer %></div><br>
   <div><%= form.label :note, 'note (紹介内容)*' %><br><%= form.text_area :note, rows: 10, cols:50 %></div><br>
 
+  <div>
+    <%= check_box_tag :agree_guidelines, "1", false %>
+    <%= label_tag :agree_guidelines, "引用元は正しく、著作権への問題はありません。" %>
+  </div><br>
+
   <div><%= form.submit '投稿する' %></div><br>
 
   <%= link_to '戻る', root_path %>

@@ -9,10 +9,16 @@ class QuotesController < ApplicationController
 
   def create
     @quote = current_user.quotes.build(quote_params)
-    if @quote.save
-      redirect_to quotes_path, notice: 'クォーツを投稿しました。'
-    else
+    @quote.save
+
+    unless params[:agree_guidelines] == "1"
+      @quote.errors.add(:base, '引用元・著作権への確認に✓が必要です。')
+    end
+
+    if @quote.errors.any?
       render :new, status: :unprocessable_entity
+    else
+      redirect_to root_path, notice: 'クォーツを投稿しました。'
     end
   end
 

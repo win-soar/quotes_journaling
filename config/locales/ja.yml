@@ -8,6 +8,11 @@ ja:
         name: 名前
         password: パスワード
         password_confirmation: パスワード(確認)
+      quote:
+        title: クォーツ
+        author: 発言者
+        note: 紹介
+        category: カテゴリ
   errors:
     messages:
       not_found: "ページが見つかりません"

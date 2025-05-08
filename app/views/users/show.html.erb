@@ -5,15 +5,15 @@
 <% if @user == current_user %>
   <%= link_to 'プロフィールを編集', edit_user_path(@user) %>
 <% end %>
-
-<h4>過去のクォーツ</h4><br>
+<br>
+<h4>過去のクォーツ</h4>
 
 <hr>
 
 <% @quotes.each do |quote| %>
   <div>
     <p><%= link_to quote.user.name, user_path(quote.user) %></p>
-    <blockquote><%= link_to quote.title, quote_path(quote) %></blockquote>
+    <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>
     <small> - <%= quote.author %></small><br>
     <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
   </div>

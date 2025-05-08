@@ -7,11 +7,17 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
+    saved = @user.save
+
+    unless params[:agree_terms] == "1"
+      @user.errors.add(:base, "利用規約・プライバシーポリシーへの同意が必要です。")
+    end
+
+    if @user.errors.any?
+      render :new, status: :unprocessable_entity
+    else
       auto_login(@user)
       redirect_to root_path, notice: "アカウントを作成しました。"
-    else
-      render :new, status: :unprocessable_entity
     end
   end
 
