@@ -21,11 +21,19 @@
   <div>
     <%= form.label :password_confirmation, "パスワード(確認)" %><br>
     <%= form.password_field :password_confirmation %>
-  </div>
+  </div><br>
+
+  <div>
+    <%= check_box_tag :agree_terms, "1", false %>
+    <%= link_to "利用規約", terms_path %>
+    ,
+    <%= link_to "プライバシーポリシー", privacy_policy_path %>
+    <%= label_tag :agree_terms, "に同意する" %>
+  </div><br>
 
   <div>
     <%= form.submit "アカウント作成" %>
-  </div>
+  </div><br>
 
   <p>アカウントをお持ちの場合</p>
   <%= link_to "ログイン", login_path %>
