@@ -26,6 +26,12 @@ class QuotesController < ApplicationController
     @quote = Quote.find(params[:id])
   end
 
+  def destroy
+    @quote = current_user.quotes.find(params[:id])
+    @quote.destroy!
+    redirect_to root_path, success: 'クォーツを削除しました。'
+  end
+
   def search
   end
 
