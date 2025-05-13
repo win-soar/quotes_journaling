@@ -9,4 +9,10 @@
 <% end %>
 <p><strong>note:</strong><br><%= simple_format(@quote.note) %></p>
 
+<% if @quote.user == current_user %>
+  <%= button_to '投稿を削除', quote_path(@quote), method: :delete, data: { confirm: 'このクォーツを削除しますか？' } %>
+<% end %>
+
+<br>
+
 <%= link_to "戻る", quotes_path, class: "btn btn-secondary" %>
