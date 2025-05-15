@@ -41,6 +41,7 @@ class QuotesController < ApplicationController
     if @quote.errors.any?
       render :edit, status: :unprocessable_entity
     else
+      @quote.save
       redirect_to @quote, notice: 'クォーツを更新しました。'
     end
   end
