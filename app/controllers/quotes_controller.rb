@@ -26,10 +26,29 @@ class QuotesController < ApplicationController
     @quote = Quote.find(params[:id])
   end
 
+  def edit
+    @quote = current_user.quotes.find(params[:id])
+  end
+
+  def update
+    @quote = current_user.quotes.find(params[:id])
+    @quote.assign_attributes(quote_params)
+
+    unless params[:agree_guidelines] == "1"
+      @quote.errors.add(:base, '引用元・著作権への確認に✓が必要です。')
+    end
+
+    if @quote.errors.any?
+      render :edit, status: :unprocessable_entity
+    else
+      redirect_to @quote, notice: 'クォーツを更新しました。'
+    end
+  end
+
   def destroy
     @quote = current_user.quotes.find(params[:id])
     @quote.destroy!
-    redirect_to root_path, success: 'クォーツを削除しました。'
+    redirect_to root_path, notice: 'クォーツを削除しました。'
   end
 
   def search

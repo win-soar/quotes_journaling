@@ -1,33 +1,4 @@
 <h2>クォーツを投稿</h2><br>
 
-<%= render 'shared/error_messages', object: @quote %>
-
-<h6>*のある項目は必須項目です。</h6><br>
-
-<%= form_with model: @quote, local: true do |form| %>
-  <div><%= form.label :title, 'Your Quotes (あなたの投稿)*' %><br><%= form.text_area :title, rows: 3, cols:50 %></div><br>
-  <div>
-    <%= form.label :category, 'Quotes type (クォーツの種類)*' %><br>
-    <% Quote.categories.each do |key, value| %>
-      <label style ="display: inline-block; margin-right: 1em;">
-        <%= form.radio_button :category, key %>
-        <%= key.humanize %>
-      </label>
-    <% end %>
-  </div><br>
-  <p>※Historical:歴史上の偉人 Celebrity:現代の著名人<br>
-    Fictional:作品に登場するキャラクター Original:あなた自身、もしくは身近な人</p>
-  <div><%= form.label :author, 'Author of the Quotes (クォーツの発言者)*' %><br><%= form.text_field :author %></div><br>
-  <div><%= form.label :source, 'Source of the Quotes (出典)' %><br><%= form.text_field :source %></div><br>
-  <div><%= form.label :source_writer, 'writer (出典の著者)' %><br><%= form.text_field :source_writer %></div><br>
-  <div><%= form.label :note, 'note (紹介内容)*' %><br><%= form.text_area :note, rows: 10, cols:50 %></div><br>
-
-  <div>
-    <%= check_box_tag :agree_guidelines, "1", false %>
-    <%= label_tag :agree_guidelines, "引用元は正しく、著作権への問題はありません。" %>
-  </div><br>
-
-  <div><%= form.submit '投稿する' %></div><br>
-
-  <%= link_to '戻る', root_path %>
-<% end %>
+<%= render 'form' %>
+<%= link_to '戻る', root_path %>
