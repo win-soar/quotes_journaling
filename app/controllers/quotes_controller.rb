@@ -75,7 +75,6 @@ class QuotesController < ApplicationController
     if params[:source_writer].present?
       @quotes = @quotes.where("source_writer ILIKE ?", "%#{params[:source_writer]}%")
     end
-
   end
 end
 

@@ -1,2 +1,13 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.user-avater {
+  border-radius: 50%;
+  margin-right: 10px
+}

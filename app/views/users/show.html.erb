@@ -1,5 +1,11 @@
 <h2><%= @user.name %></h2>
 
+<% if @user.avatar.attached? && @user.avatar.image? %>
+  <%= image_tag @user.avatar.variant(resize_to_limit: [100, 100]) %>
+<% else %>
+  <%= image_tag 'default_avatar.png', size: "100x100" %>
+<% end %>
+
 <p><%= @user.bio.presence || 'まだ自己紹介がありません' %></p>
 
 <% if @user == current_user %>
@@ -12,6 +18,11 @@
 
 <% @quotes.each do |quote| %>
   <div>
+    <% if quote.user.avatar.attached? %>
+      <%= image_tag quote.user.avatar.variant(resize_to_limit: [50, 50]) %>
+    <% else %>
+      <%= image_tag 'default_avatar.png', size: "50x50" %>
+    <% end %>
     <p><%= link_to quote.user.name, user_path(quote.user) %></p>
     <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>
     <small> - <%= quote.author %></small><br>
