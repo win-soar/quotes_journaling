@@ -14,7 +14,7 @@
     <% if quote.user.avatar.attached? %>
       <%= image_tag quote.user.avatar.variant(resize_to_limit: [50, 50]) %>
     <% else %>
-      <%= image_tag asset_path('default_avatar.png'), size: "50x50" %>
+      <%= image_tag('/images/default_avatar.png', size: "50x50") %>
     <% end %>
     <p><%= link_to quote.user.name, user_path(quote.user) %></p>
     </div>
