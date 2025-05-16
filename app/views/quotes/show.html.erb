@@ -4,7 +4,7 @@
   <% if @quote.user.avatar.attached? %>
     <%= image_tag @quote.user.avatar.variant(resize_to_limit: [75, 75]) %>
   <% else %>
-    <%= image_tag 'default_avatar.png', size: "75x75" %>
+    <%= image_tag asset_path('default_avatar.png'), size: "75x75" %>
   <% end %>
   <h4><strong>投稿者:</strong><%= link_to @quote.user.name, user_path(@quote.user) %></h4>
 </div>
