@@ -20,6 +20,9 @@ gem "sorcery"
 # i18nのGem
 gem 'rails-i18n'
 
+# アバターの為のGem
+gem 'image_processing', '~> 1.2'
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 

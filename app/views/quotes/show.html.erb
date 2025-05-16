@@ -1,7 +1,15 @@
 <h2><%= "\"#{@quote.title}\"" %></h2><br>
 
-<h4><strong>投稿者:</strong> <%= @quote.user.name %></h4><br>
+<div class="user-info">
+  <% if @quote.user.avatar.attached? %>
+    <%= image_tag @quote.user.avatar.variant(resize_to_limit: [75, 75]) %>
+  <% else %>
+    <%= image_tag 'default_avatar.png', size: "75x75" %>
+  <% end %>
+  <h4><strong>投稿者:</strong><%= link_to @quote.user.name, user_path(@quote.user) %></h4>
+</div>
 
+<br>
 <p><strong>Author of the Quotes:</strong> <%= @quote.author %></p>
 <p><strong>Quotes type:</strong> <%= @quote.category %></p>
 <% if @quote.source.present? %>

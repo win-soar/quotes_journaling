@@ -5,12 +5,17 @@
     <%= form.label :name, 'ユーザー名' %><br>
     <%= form.text_field :name %>
   </div>
-
+<br>
   <div>
     <%= form.label :bio, '自己紹介' %><br>
     <%= form.text_area :bio, rows: 10, cols: 50 %>
   </div>
-
+<br>
+  <div>
+    <%= form.label :avatar, 'プロフィール画像' %>
+    <%= form.file_field :avatar, accept: 'image/*' %>
+  </div>
+<br>
   <div>
     <%= form.submit '更新する' %>
   </div>

@@ -15,7 +15,7 @@ ENV RAILS_ENV="production" \
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client libvips nodejs npm libpq-dev && \
+    apt-get install --no-install-recommends -y curl default-mysql-client libvips nodejs npm libpq-dev imagemagick && \
     npm install -g corepack && corepack enable && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
@@ -29,7 +29,8 @@ RUN apt-get update -qq && \
     default-mysql-client \
     build-essential \
     libpq-dev \
-    nodejs
+    nodejs \
+    imagemagick
 
 # Install JavaScript dependencies
 ARG NODE_VERSION=16.19.0

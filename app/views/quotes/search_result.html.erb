@@ -36,16 +36,17 @@
 
 <%= link_to '検索条件をクリア', root_path, class: 'btn btn-secondary' %>
 
+<br><hr>
+
 <% if @quotes.present? && @quotes.any? %>
-  <% @quotes.each do |quote| %>
+  <% @quotes.order(created_at: :desc).each do |quote| %>
     <div>
       <strong><%= quote.user.name %></strong>
       <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>
       <small> - <%= quote.author %></small><br>
       <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
-    </div>
+    </div><hr>
   <% end %>
-  <hr>
 <% else %>
   <p>検索結果が見つかりませんでした。</p>
 <% end %>
