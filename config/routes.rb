@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'quotes/index'
   get 'quotes/create'
+  get 'health_check', to: 'home#health_check'
   get 'signup', to: 'users#new'
   get 'users', to: 'users#create'
   get 'terms', to: 'static_pages#terms', as: :terms
