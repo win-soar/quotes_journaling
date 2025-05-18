@@ -29,6 +29,7 @@ RUN apt-get update -qq && \
     default-mysql-client \
     build-essential \
     libpq-dev \
+    libsass-dev \
     nodejs \
     imagemagick
 
