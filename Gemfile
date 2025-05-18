@@ -24,6 +24,7 @@ gem 'rails-i18n'
 gem 'image_processing', '~> 1.2'
 
 gem 'sassc-rails'
+gem "bootstrap", "~> 5.3.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
