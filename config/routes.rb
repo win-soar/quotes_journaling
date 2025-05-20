@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   get 'users', to: 'users#create'
   get 'terms', to: 'static_pages#terms', as: :terms
+  get 'likes', to: 'likes#index', as: :user_likes
   get 'privacy_policy', to: 'static_pages#privacy_policy', as: :privacy_policy
   get    'login',  to: 'sessions#new'
   post   'login',  to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   resources :users, only: [:new, :create, :show, :edit, :update]
   resources :quotes, only: [:new, :index, :create, :show, :destroy, :edit, :update] do
+    resources :likes, only: [:create, :destroy]
     collection do
       get :search
       get :search_result

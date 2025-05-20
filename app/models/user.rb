@@ -2,7 +2,8 @@ class User < ApplicationRecord
   authenticates_with_sorcery!
 
   has_many :quotes
-  has_many :like_quotes
+  has_many :likes, dependent: :destroy
+  has_many :liked_quotes, through: :likes, source: :quote
   has_many :comments
   has_one_attached :avatar
 
@@ -12,6 +13,10 @@ class User < ApplicationRecord
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> {new_record? || changes[:crypted_password] }
   validate :avatar_type
+
+  def liked?(quote)
+    likes.exists?(quote_id: quote.id)
+  end
 
   private
 

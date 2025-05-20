@@ -1,0 +1,23 @@
+<h2>❤️いいねした投稿</h2>
+
+<% @liked_quotes.each do |quote| %>
+  <div>
+    <div class="user-info">
+    <% if quote.user.avatar.attached? %>
+      <%= image_tag quote.user.avatar.variant(resize_to_limit: [50, 50]) %>
+    <% else %>
+      <%= image_tag('/images/default_avatar.png', size: "50x50") %>
+    <% end %>
+    <p><%= link_to quote.user.name, user_path(quote.user) %></p>
+    </div>
+
+    <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>
+
+    <small> - <%= quote.author %></small><br>
+
+    <%= render partial: "likes/like_button", locals: { quote: quote } %>
+
+    <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
+  </div>
+  <hr>
+<% end %>
