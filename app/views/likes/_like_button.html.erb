@@ -1,0 +1,11 @@
+<div id="like_button_<%= quote.id%>">
+  <% if current_user.liked?(quote) %>
+    <%= button_to quote_like_path(quote, quote.likes.find_by(user: current_user)), method: :delete, form: { data: { turbo_stream: true } } do %>
+      ❤️ <%= quote.likes.count %>
+    <% end %>
+  <% else %>
+    <%= button_to quote_likes_path(quote), method: :post, form: { data: { turbo_stream: true } } do %>
+      🤍 <%= quote.likes.count %>
+    <% end %>
+  <% end %>
+</div>
