@@ -10,26 +10,12 @@
 <p><%= @user.bio.presence || 'まだ自己紹介がありません' %></p>
 
 <% if @user == current_user %>
-  <%= link_to 'プロフィールを編集', edit_user_path(@user) %>
+  <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'btn btn-primary' %>
+  <%= link_to 'いいねした投稿', user_likes_path(@user), class: 'btn btn-outline-danger' %>
 <% end %>
-<br>
+
 <h4>過去のクォーツ</h4>
 
 <hr>
 
-<% @quotes.each do |quote| %>
-  <div>
-    <div class="user-info">
-      <% if quote.user.avatar.attached? %>
-        <%= image_tag quote.user.avatar.variant(resize_to_limit: [50, 50]) %>
-      <% else %>
-        <%= image_tag('/images/default_avatar.png', size: "50x50") %>
-      <% end %>
-      <p><%= link_to quote.user.name, user_path(quote.user) %></p>
-    </div>
-    <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>
-    <small> - <%= quote.author %></small><br>
-    <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
-  </div>
-  <hr>
-<% end %>
+<%= render partial: 'quotes/quote', collection: @quotes, as: :quote %>
