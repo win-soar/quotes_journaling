@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_19_124737) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_22_062315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,13 +42,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_19_124737) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "like_quotes", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
     t.bigint "user_id", null: false
     t.bigint "quote_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["quote_id"], name: "index_like_quotes_on_quote_id"
-    t.index ["user_id"], name: "index_like_quotes_on_user_id"
+    t.index ["quote_id"], name: "index_comments_on_quote_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -88,8 +89,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_19_124737) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "like_quotes", "quotes"
-  add_foreign_key "like_quotes", "users"
+  add_foreign_key "comments", "quotes"
+  add_foreign_key "comments", "users"
   add_foreign_key "likes", "quotes"
   add_foreign_key "likes", "users"
   add_foreign_key "quotes", "users"
