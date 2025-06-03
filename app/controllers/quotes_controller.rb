@@ -24,6 +24,8 @@ class QuotesController < ApplicationController
 
   def show
     @quote = Quote.find(params[:id])
+    @comment = @quote.comments.build
+    @comments = @quote.comments.includes(:user).order(created_at: :desc)
   end
 
   def edit
