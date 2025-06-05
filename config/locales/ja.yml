@@ -13,6 +13,8 @@ ja:
         author: 発言者
         note: 紹介
         category: カテゴリ
+      comment:
+        body: コメント
   errors:
     messages:
       not_found: "ページが見つかりません"
