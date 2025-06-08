@@ -1,3 +1,5 @@
+require "active_storage/service/s3_service"
+
 class ActiveStorage::Service::CloudflareR2Service < ActiveStorage::Service::S3Service
   private
 
