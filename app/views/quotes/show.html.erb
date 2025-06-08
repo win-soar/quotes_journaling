@@ -1,11 +1,7 @@
 <h2><%= "\"#{@quote.title}\"" %></h2><br>
 
 <div class="user-info">
-  <% if @quote.user.avatar.attached? %>
-    <%= image_tag @quote.user.avatar.variant(resize_to_limit: [75, 75]) %>
-  <% else %>
-    <%= image_tag('/images/default_avatar.png', size: "75x75") %>
-  <% end %>
+  <%= avatar_image_tag(@quote.user, size: "75x75") %>
   <h4><strong>投稿者:</strong><%= link_to @quote.user.name, user_path(@quote.user) %></h4>
 </div>
 
@@ -30,11 +26,7 @@
 <%= render @comments %>
 
 <div class="user-info">
-  <% if current_user.avatar.attached? %>
-    <%= image_tag current_user.avatar.variant(resize_to_limit: [50, 50]) %>
-  <% else %>
-    <%= image_tag('/images/default_avatar.png', size: "50x50") %>
-  <% end %>
+  <%= avatar_image_tag(current_user) %>
 </div>
 
 <% if @comment.errors.any? %>
