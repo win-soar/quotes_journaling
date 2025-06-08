@@ -1,3 +1,5 @@
+puts "[CloudflareR2Service] cloudflare_r2_service.rb is loaded"
+
 require "active_storage/service/s3_service"
 
 class ActiveStorage::Service::CloudflareR2Service < ActiveStorage::Service::S3Service
