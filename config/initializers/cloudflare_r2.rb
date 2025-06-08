@@ -1,0 +1,1 @@
+require Rails.root.join("app/services/active_storage/service/cloudflare_r2_service")
