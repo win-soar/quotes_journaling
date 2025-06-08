@@ -26,6 +26,7 @@ gem 'image_processing', '~> 1.2'
 gem 'sassc-rails'
 gem "bootstrap", "~> 5.3.0"
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'aws-sdk-s3', require: false
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
