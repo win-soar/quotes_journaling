@@ -1,10 +1,6 @@
 <div class="comment border rouded p-2 my-2">
   <div class="user-info">
-    <% if comment.user&.avatar&.attached? %>
-      <%= image_tag comment.user.avatar.variant(resize_to_limit: [50, 50]) %>
-    <% else %>
-      <%= image_tag('/images/default_avatar.png', size: "50x50") %>
-    <% end %>
+    <%= avatar_image_tag(comment.user) %>
 
     <% if comment.user.present? %>
       <p><%= link_to comment.user.name, user_path(comment.user) %></p>
