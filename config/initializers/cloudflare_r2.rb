@@ -2,8 +2,11 @@ puts "[CloudflareR2Service] Initializer running..."
 
 require Rails.root.join("app/services/active_storage/service/cloudflare_r2_service")
 
-Rails.application.config.to_prepare do
-  ActiveStorage::Service::Registry.register(
-    "CloudflareR2", ActiveStorage::Service::CloudflareR2Service
-  )
-end
+ActiveStorage::Service.url_resolver { |name, config, *_args|
+  if name == "CloudflareR2"
+    puts "[CloudflareR2Service] Configuring CloudflareR2Service..."
+    ActiveStorage::Service::CloudflareR2Service.new(**config.symbolize_keys)
+  else
+    nil # fallback to default
+  end
+}
