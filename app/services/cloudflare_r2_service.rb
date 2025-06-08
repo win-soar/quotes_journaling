@@ -1,6 +1,6 @@
 require "active_storage/service/s3_service"
 
-class ActiveStorage::Service::CloudflareR2Service < ActiveStorage::Service::S3Service
+class CloudflareR2Service < ActiveStorage::Service
   private
 
   def upload_with_checksum(key, io, checksum: nil, **options)
