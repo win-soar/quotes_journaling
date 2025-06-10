@@ -43,6 +43,18 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     corepack enable && \
     rm -rf /tmp/node-build-master
 
+# ImageMagickとlibvips、およびその他の必要な依存関係をインストール
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        libvips \
+        imagemagick \
+        poppler-utils \
+        ghostscript \
+        libxml2-dev \
+        libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install application gems
 COPY Gemfile Gemfile.lock ./  
 RUN bundle install && \
