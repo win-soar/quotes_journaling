@@ -1,0 +1,1 @@
+Rails.application.config.active_storage.aws_checksums = false
