@@ -1,1 +1,1 @@
-Rails.application.config.active_storage.aws_checksums = false
+Rails.application.config.active_storage.content_checksum_service = nil
