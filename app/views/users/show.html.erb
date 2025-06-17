@@ -1,9 +1,5 @@
 <div class="user-info">
-  <% if @user.avatar.attached? && @user.avatar.image? %>
-    <%= image_tag @user.avatar.variant(resize_to_limit: [100, 100]) %>
-  <% else %>
-    <%= image_tag('/images/default_avatar.png', size: "100x100") %>
-  <% end %>
+  <%= avatar_image_tag(@user, size: "100x100") %>
   <h2><%= @user.name %></h2>
 </div>
 
