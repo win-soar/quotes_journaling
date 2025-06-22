@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    container_name: rails_app
+    volumes:
+      - .:/rails
+    ports:
+      - "3000:3000"
+    working_dir: /rails
+    depends_on:
+      - db
+    environment:
+      - RAILS_ENV=development
+      - WEB_CONCURRENCY=1
+    stdin_open: true
+    tty: true
+
+  db:
+    image: postgres:15
+    container_name: rails_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: quotes_journaling_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
