@@ -28,7 +28,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fall back to assets pipeline if a precompiled asset is missed.
-  config.action_controller.asset_host = "https://pub-d429bdd697654555854a5476f306215c.r2.dev/quotesjournaling-avatar-bucket"
+  config.action_controller.asset_host = ENV.fetch("ASSET_HOST") { "https://pub-d429bdd697654555854a5476f306215c.r2.dev/quotesjournaling-avatar-bucket" }
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
