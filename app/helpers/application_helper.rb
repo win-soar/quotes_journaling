@@ -3,6 +3,18 @@ module ApplicationHelper
     attachment.connect_type.start_with?('image')
   end
 
+  def public_avatar_url(user)
+    return unless user.avatar.attached?
+
+    url = rails_blob_url(user.avatar, only_path: false)
+
+    if Rails.env.production?
+      url.sub("r2.cloudflarestorage.com/quotesjournaling-avatar-bucket", "pub-d429bdd697654555854a5476f306215c.r2.dev")
+    else
+      url
+    end
+  end
+
   def avatar_image_tag(user, size: "50x50")
     if user.avatar.attached?
       url = url_for(user.avatar)
