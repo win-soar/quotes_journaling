@@ -6,12 +6,12 @@ module ApplicationHelper
   def public_avatar_url(user)
     return unless user.avatar.attached?
 
-    url = rails_blob_url(user.avatar, only_path: false)
+    service_url = user.avatar.blob.service_url
 
     if Rails.env.production?
-      url.gsub(%r{https://[^/]+/quotesjournaling-avatar-bucket}, "https://pub-d429bdd697654555854a5476f306215c.r2.dev")
+      service_url.gsub(%r{https://[^/]+/quotesjournaling-avatar-bucket}, "https://pub-d429bdd697654555854a5476f306215c.r2.dev")
     else
-      url
+      service_url
     end
   end
 
