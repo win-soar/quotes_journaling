@@ -24,7 +24,7 @@ class User < ApplicationRecord
     return unless avatar.attached?
     unless avatar.image?
       errors.add(:avatar, 'は画像ファイルを選択してください')
-      avater.purge
+      avatar.purge
     end
   end
 end
