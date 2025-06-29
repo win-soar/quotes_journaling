@@ -9,7 +9,7 @@ module ApplicationHelper
     url = rails_blob_url(user.avatar, only_path: false)
 
     if Rails.env.production?
-      url.sub("r2.cloudflarestorage.com/quotesjournaling-avatar-bucket", "pub-d429bdd697654555854a5476f306215c.r2.dev")
+      url.gsub(%r{https://[^/]+/quotesjournaling-avatar-bucket}, "https://pub-d429bdd697654555854a5476f306215c.r2.dev")
     else
       url
     end
