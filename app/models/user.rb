@@ -18,6 +18,14 @@ class User < ApplicationRecord
     likes.exists?(quote_id: quote.id)
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["bio", "created_at", "crypted_password", "email", "id", "id_value", "name", "password_digest", "salt", "updated_at"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["quotes", "likes", "comments", "avatar"]
+  end
+
   private
 
   def avatar_type

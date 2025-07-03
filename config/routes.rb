@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   get 'quotes/index'
   get 'quotes/create'
   get 'health_check', to: 'home#health_check'
