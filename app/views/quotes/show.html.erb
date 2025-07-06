@@ -21,6 +21,10 @@
   <%= button_to '投稿を削除', quote_path(@quote), method: :delete, data: { confirm: 'このクォーツを削除しますか？' }, class: 'btn btn-danger btn-sm' %>
 <% end %>
 
+<% if @quote.user != current_user %>
+  <%= link_to '通報', new_quote_report_path(@quote), class: 'btn btn-warning btn-sm' %>
+<% end %>
+
 <br>
 
 <%= render @comments %>

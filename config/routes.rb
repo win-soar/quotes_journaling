@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'reports/new'
+  get 'reports/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get 'quotes/index'
@@ -15,11 +17,15 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :show, :edit, :update]
   resources :quotes, only: [:new, :index, :create, :show, :destroy, :edit, :update] do
     resources :likes, only: [:create, :destroy]
+    resources :reports, only: [:new, :create], defaults: { reportable: 'Quote' }
     resources :comments, only: [:create]
     collection do
       get :search
       get :search_result
     end
+  end
+  resources :comments do
+    resources :reports, only: [:new, :create], defaults: { reportable: 'Comment'}
   end
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

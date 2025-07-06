@@ -1,0 +1,14 @@
+<h2>投稿を通報する</h2>
+
+<%= render 'shared/error_messages', object: @report %>
+
+<%= form_with(model: [@reportable, @report], local: true) do |f| %>
+  <div class="mb-3">
+    <%= f.label :reason, '通報する理由について記載してください。' %><br>
+    <%= f.text_area :reason, rows: 5, cols:50, class: "form-contorl" %>
+  </div>
+
+  <%= f.submit '送信', class: "btn btn-warning" %>
+<% end %>
+
+<%= link_to "戻る", @reportable, class: "btn btn-secondary mt-3" %>
