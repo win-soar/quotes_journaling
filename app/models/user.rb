@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_quotes, through: :likes, source: :quote
   has_many :comments, dependent: :destroy
+  has_many :reports, dependent: :destroy
   has_one_attached :avatar
 
   validates :email, presence: true, uniqueness: true
@@ -23,7 +24,7 @@ class User < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["quotes", "likes", "comments", "avatar"]
+    ["quotes", "likes", "comments", "avatar", "reports"]
   end
 
   private

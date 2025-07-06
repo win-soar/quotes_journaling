@@ -3,6 +3,7 @@ class Quote < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
   has_many :comments, dependent: :destroy
+  has_many :reports, as: :reportable, dependent: :destroy
 
   validates :title, :author, :note, :category, presence: true
 
@@ -14,7 +15,7 @@ class Quote < ApplicationRecord
   }
 
   def self.ransackable_associations(auth_object = nil)
-    ["user", "likes", "liked_users", "comments"]
+    ["user", "likes", "liked_users", "comments", "reports"]
   end
 
   def self.ransackable_attributes(auth_object = nil)

@@ -1,5 +1,7 @@
 <h2>プロフィールを編集</h2><br>
 
+<%= render 'shared/error_messages', object: @user %>
+
 <%= form_with(model: @user, local: true) do |form| %>
   <div>
     <%= form.label :name, 'ユーザー名' %><br>
