@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["input", "results"]
 
   connect() {
+    console.log("✅ autocomplete controller connected for field:", this.inputTarget.dataset.field)
     this.timeout = null
   }
 
@@ -22,9 +23,15 @@ export default class extends Controller {
       fetch(`/autocomplete?query=${encodeURIComponent(query)}&field=${field}`)
         .then(response => response.json())
         .then(data => {
-          this.resultsTarget.innerHTML = data.map(item =>
-            `<div class="suggestion" data-action="click->autocomplete#select" data-value="${item}">${item}</div>`
-          ).join("")
+          this.resultsTarget.innerHTML = `
+            <div class="list-group">
+              ${data.map(item =>
+                `<button type="button" class="list-group-item list-group-item-action"
+                  data-action="click->autocomplete#select"
+                  data-value="${item}">${item}</button>`
+              ).join("")}
+            </div>
+          `
         })
     }, 300)
   }
