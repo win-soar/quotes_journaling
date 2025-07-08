@@ -3,14 +3,16 @@
 <br>
 
 <%= form_with url: search_result_quotes_path, method: :get, local:true do |form| %>
-  <div>
+  <div data-controller="autocomplete" class="mb-3 position-relative">
     <%= form.label :title %>
-    <%= form.text_field :title, placeholder: "クォーツで検索" %>
+    <%= form.text_field :title, placeholder: "クォーツで検索", data: { autocomplete_target: "input", action: "inputa->autocomplete#search", field: "title" } %>
+    <div data-autocomplete-target="results" class="autocomplete-results"></div>
   </div><br>
 
-  <div>
+  <div data-controller="autocomplete" class="mb-3 position-relative">
     <%= form.label :author %>
-    <%= form.text_field :author, placeholder: "発言者で検索" %>
+    <%= form.text_field :author, placeholder: "発言者で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "author" } %>
+    <div data-autocomplete-target="results" class="autocomplete-results"></div>
   </div><br>
 
   <div>
@@ -26,14 +28,16 @@
     <%= form.text_field :note, placeholder: "紹介内容で検索" %>
   </div><br>
 
-  <div>
+  <div data-controller="autocomplete" class="mb-3 position-relative">
     <%= form.label :source %>
-    <%= form.text_field :source, placeholder: "出典で検索" %>
+    <%= form.text_field :source, placeholder: "出典で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "source" } %>
+    <div data-autocomplete-target="results" class="autocomplete-results"></div>
   </div><br>
 
-  <div>
+  <div data-controller="autocomplete" class="mb-3 position-relative">
     <%= form.label :source_writer %>
-    <%= form.text_field :source_writer, placeholder: "出典の著者で検索" %>
+    <%= form.text_field :source_writer, placeholder: "出典の著者で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "source_writer" } %>
+    <div data-autocomplete-target="results" class="autocomplete-results"></div>
   </div><br>
 
   <div>

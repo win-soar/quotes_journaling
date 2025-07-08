@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   get 'quotes/index'
   get 'quotes/create'
+  get '/autocomplete', to: 'autocomplete#index'
   get 'health_check', to: 'home#health_check'
   get 'signup', to: 'users#new'
   get 'users', to: 'users#create'
