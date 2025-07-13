@@ -5,7 +5,7 @@
 <%= form_with url: search_result_quotes_path, method: :get, local:true do |form| %>
   <div data-controller="autocomplete" class="mb-3 position-relative">
     <%= form.label :title %>
-    <%= form.text_field :title, placeholder: "クォーツで検索", data: { autocomplete_target: "input", action: "inputa->autocomplete#search", field: "title" } %>
+    <%= form.text_field :title, placeholder: "クォーツで検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "title" } %>
     <div data-autocomplete-target="results" class="autocomplete-results"></div>
   </div><br>
 
