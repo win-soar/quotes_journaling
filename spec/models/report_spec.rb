@@ -20,4 +20,13 @@ RSpec.describe Report, type: :model do
       expect(user).to be_valid
     end
   end
+
+  describe 'アソシエーション' do
+    it 'belongs to a polymorphic reportable' do
+      association = Report.reflect_on_association(:reportable)
+      expect(association.macro).to eq(:belongs_to)
+      expect(association.options[:polymorphic]).to be true
+    end
+    it { should belong_to(:user) }
+  end
 end

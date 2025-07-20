@@ -20,4 +20,10 @@ RSpec.describe Comment, type: :model do
       expect(comment).to be_valid
     end
   end
+
+  describe 'アソシエーション' do
+    it { should belong_to(:user) }
+    it { should belong_to(:quote) }
+    it { should have_many(:reports).dependent(:destroy) }
+  end
 end

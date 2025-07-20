@@ -26,4 +26,9 @@ RSpec.describe Like, type: :model do
       expect(duplicate_like).not_to be_valid
     end
   end
+
+  describe 'アソシエーション' do
+    it { should belong_to(:quote) }
+    it { should belong_to(:user) }
+  end
 end
