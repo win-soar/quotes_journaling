@@ -28,4 +28,13 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
   end
+
+  describe 'アソシエーション' do
+    it { should have_many(:quotes) }
+    it { should have_many(:likes).dependent(:destroy) }
+    it { should have_many(:liked_quotes).through(:likes).source(:quote) }
+    it { should have_many(:comments).dependent(:destroy) }
+    it { should have_many(:reports).dependent(:destroy) }
+    it { should have_one_attached(:avatar) }
+  end
 end

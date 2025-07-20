@@ -29,4 +29,17 @@ RSpec.describe Quote, type: :model do
       expect(quote).to be_valid
     end
   end
+
+  describe 'アソシエーション' do
+    it { should belong_to(:user) }
+    it { should have_many(:likes).dependent(:destroy) }
+    it { should have_many(:liked_users).through(:likes).source(:user) }
+    it { should have_many(:comments).dependent(:destroy) }
+    it 'has many reports as reportable' do
+      association = Quote.reflect_on_association(:reports)
+      expect(association.macro).to eq(:has_many)
+      expect(association.options[:as]).to eq(:reportable)
+      expect(association.options[:dependent]).to eq(:destroy)
+    end
+  end
 end
