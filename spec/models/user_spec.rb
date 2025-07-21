@@ -37,4 +37,18 @@ RSpec.describe User, type: :model do
     it { should have_many(:reports).dependent(:destroy) }
     it { should have_one_attached(:avatar) }
   end
+
+  describe 'liked?メソッド' do
+    let(:user)  { User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password', name: 'テストマン') }
+    let(:quote) { Quote.create!(title: '名言', note: 'note', author: 'author', source: 'source', user: user, category: 1) }
+
+    it 'いいねしていなければ false を返す' do
+      expect(user.liked?(quote)).to be_falsey
+    end
+
+    it 'いいねした投稿なら true を返す' do
+      Like.create!(user: user, quote: quote)
+      expect(user.liked?(quote)).to be_truthy
+    end
+  end
 end
