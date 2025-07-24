@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'up', to: 'rails/health#show', as: :rails_health_check
 
   # 認証
-  get    'signup', to: 'users#new'    # フレンドリーなURL用
+  get    'signup', to: 'users#new'
   get    'login',  to: 'sessions#new'
   post   'login',  to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   get 'likes', to: 'likes#index', as: :user_likes
 
   # ホーム
-  get 'home/index'  # 使っていれば残してOK（使ってなければ削除可能）
+  get 'home/index'
 
   # ルート
   root 'quotes#index'
