@@ -14,7 +14,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :password, length: {minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }, presence: true, if: -> { provider.blank? }
+  validates :password, confirmation: true, presence: true, if: -> { provider.blank? && (new_record? || changes[:crypted_password]) }
   validates :password_confirmation, presence: true, if: -> {new_record? || changes[:crypted_password] }
   validate :avatar_type
 
@@ -41,9 +41,7 @@ class User < ApplicationRecord
       user.password = generated_password
       user.password_confirmation = generated_password
       user.name = auth.info.name
-      unless user.save
-        Rails.logger.debug "⚠️ User save failed: #{user.errors.full_messages}"
-      end
+      Rails.logger.debug "⚠️ User save failed: #{user.errors.full_messages}" unless user.save
     end
   end
 

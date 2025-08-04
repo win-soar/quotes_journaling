@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!, unless: :active_admin_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
-  skip_before_action :verify_authenticity_token, only: [:create], if: -> { devise_controller? && action_name == 'create' }
+  skip_before_action :verify_authenticity_token, if: :devise_controller?
 
   helper_method :current_user
 
@@ -18,6 +18,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :agree_terms])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name agree_terms])
   end
 end
