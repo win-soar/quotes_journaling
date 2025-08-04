@@ -1,40 +1,55 @@
 Rails.application.routes.draw do
-  get 'reports/new'
-  get 'reports/create'
+  # Devise & ActiveAdmin
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  get 'quotes/index'
-  get 'quotes/create'
-  get '/autocomplete', to: 'autocomplete#index'
-  get 'health_check', to: 'home#health_check'
-  get 'signup', to: 'users#new'
-  get 'users', to: 'users#create'
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
+
+  authenticated :user do
+    root 'quotes#index', as: :authenticated_root
+  end
+  unauthenticated do
+    root 'home#index', as: :unauthenticated_root
+  end
+
+  # 静的ページ
   get 'terms', to: 'static_pages#terms', as: :terms
-  get 'likes', to: 'likes#index', as: :user_likes
   get 'privacy_policy', to: 'static_pages#privacy_policy', as: :privacy_policy
-  get    'login',  to: 'sessions#new'
-  post   'login',  to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
+
+  # ヘルスチェック
+  get 'health_check', to: 'home#health_check'
+  get 'up', to: 'rails/health#show', as: :rails_health_check
+
+  # オートコンプリート
+  get '/autocomplete', to: 'autocomplete#index'
+
+  # 一般ユーザー関連
   resources :users, only: [:new, :create, :show, :edit, :update]
+
+  # 投稿（名言）関連
   resources :quotes, only: [:new, :index, :create, :show, :destroy, :edit, :update] do
-    resources :likes, only: [:create, :destroy]
-    resources :reports, only: [:new, :create], defaults: { reportable: 'Quote' }
-    resources :comments, only: [:create]
     collection do
       get :search
       get :search_result
     end
+
+    resources :likes, only: [:create, :destroy]
+    resources :reports, only: [:new, :create], defaults: { reportable: 'Quote' }
+    resources :comments, only: [:create]
   end
-  resources :comments do
-    resources :reports, only: [:new, :create], defaults: { reportable: 'Comment'}
+
+  # コメント通報用
+  resources :comments, only: [] do
+    resources :reports, only: [:new, :create], defaults: { reportable: 'Comment' }
   end
+
+  # ユーザーがいいねした投稿一覧
+  get 'likes', to: 'likes#index', as: :user_likes
+
+  # ホーム
   get 'home/index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  root "quotes#index"
+  # ルート
+  root 'quotes#index'
 end
