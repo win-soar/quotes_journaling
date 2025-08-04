@@ -3,14 +3,13 @@ module Users
     skip_before_action :verify_authenticity_token, only: [:google_oauth2]
 
     def google_oauth2
-      @user = User.from_omniauth(request.env["omniauth.auth"])
-      Rails.logger.info "Omniauth user: #{@user.inspect}"
-      Rails.logger.info "Errors: #{@user.errors.full_messages}" if @user.errors.any?
+      auth = request.env["omniauth.auth"]
+      @user = User.from_omniauth(auth)
+
       if @user.persisted?
         sign_in_and_redirect @user, event: :authentication
       else
-        Rails.logger.error "Failed to persist user: #{@user.errors.full_messages}"
-        redirect_to root_path, alert: "認証に失敗しました"
+        redirect_to root_path, alert: "認証に失敗しました: #{@user.errors.full_messages.join(', ')}"
       end
     end
   end
