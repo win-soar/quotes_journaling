@@ -35,14 +35,15 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
-      user.email = auth.info.email
-      generated_password = Devise.friendly_token[0, 20]
-      user.password = generated_password
-      user.password_confirmation = generated_password
-      user.name = auth.info.name
-      Rails.logger.debug "⚠️ User save failed: #{user.errors.full_messages}" unless user.save
+    user = where(provider: auth.provider, uid: auth.uid).first_or_initialize
+    user.email ||= auth.info.email
+    user.password ||= Devise.friendly_token[0, 20]
+    user.name ||= auth.info.name
+
+    unless user.save
+      Rails.logger.error "Save failed: #{user.errors.full_messages}"
     end
+    user
   end
 
   private
