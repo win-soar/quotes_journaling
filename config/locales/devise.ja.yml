@@ -1,0 +1,63 @@
+ja:
+  devise:
+    confirmations:
+      confirmed: "メールアドレスが確認されました。"
+      send_instructions: "数分後、メールアドレスに確認メールを送信します。"
+      send_paranoid_instructions: "数分後、メールアドレスに確認メールを送信します。"
+    failure:
+      already_authenticated: "すでにログインしています。"
+      inactive: "アカウントが有効化されていません。"
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      locked: "アカウントがロックされています。"
+      last_attempt: "アカウントがロックされます。"
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
+      timeout: "セッションが期限切れです。"
+      unauthenticated: "ログインまたは新規登録が必要です。"
+      unconfirmed: "メールアドレスを確認してください。"
+    mailer:
+      confirmation_instructions:
+        subject: "確認メール"
+      reset_password_instructions:
+        subject: "パスワード再設定メール"
+      unlock_instructions:
+        subject: "アカウントロック解除メール"
+      email_changed:
+        subject: "メールアドレス変更メール"
+      password_change:
+        subject: "パスワード変更メール"
+    omniauth_callbacks:
+      failure: "\"%{reason}\"のため、認証できません。"
+      success: "認証しました。"
+    passwords:
+      no_token: "パスワードリセットメールを送信できません。"
+      send_instructions: "数分後、メールアドレスにパスワード再設定メールを送信します。"
+      send_paranoid_instructions: "数分後、メールアドレスにパスワード再設定メールを送信します。"
+      updated: "パスワードが変更されました。"
+      updated_not_active: "パスワードが変更されました。"
+    registrations:
+      destroyed: "ご利用ありがとうございました。アカウントが削除されました。"
+      signed_up: "ご利用いただきありがとうございます。アカウントが作成されました。"
+      signed_up_but_inactive: "アカウントが有効化されていません。"
+      signed_up_but_locked: "アカウントがロックされています。"
+      signed_up_but_unconfirmed: "メールアドレスの確認メールを送信しました。"
+      update_needs_confirmation: "アカウントが更新されました。"
+      updated: "アカウントが更新されました。"
+      updated_but_not_signed_in: "アカウントが更新されました。"
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "ログアウトしました。"
+    unlocks:
+      send_instructions: "数分後、メールアドレスに確認メールを送信します。"
+      send_paranoid_instructions: "数分後、メールアドレスに確認メールを送信します。"
+      unlocked: "アカウントがロック解除されました。"
+  errors:
+    messages:
+      already_confirmed: "メールアドレスは既に確認されました。"
+      confirmation_period_expired: "メールアドレスの確認期間が切れました。"
+      expired: "期限切れです。"
+      not_found: "not found"
+      not_locked: "ロックされていません。"
+      not_saved:
+        one: "%{resource}を保存できません。"
+        other: "%{count}エラーにより、%{resource}を保存できません。"

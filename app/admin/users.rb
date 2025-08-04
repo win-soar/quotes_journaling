@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  remove_filter :liked_quotes, :avatar_attachment, :avatar_blob
+  remove_filter :liked_quotes, :avatar_attachment, :avatar_blob, :provider
 
   index do
     selectable_column
@@ -9,6 +9,8 @@ ActiveAdmin.register User do
     column :created_at
     actions
   end
+
+  filter :provider
 
   form do |f|
     f.inputs do

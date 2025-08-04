@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  authenticates_with_sorcery!
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 
   has_many :quotes
   has_many :likes, dependent: :destroy
@@ -11,9 +14,13 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :password, length: {minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
+  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }, presence: true, if: -> { provider.blank? }
   validates :password_confirmation, presence: true, if: -> {new_record? || changes[:crypted_password] }
   validate :avatar_type
+
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   def liked?(quote)
     likes.exists?(quote_id: quote.id)
@@ -25,6 +32,19 @@ class User < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     ["quotes", "likes", "comments", "avatar", "reports"]
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
+      user.email = auth.info.email
+      generated_password = Devise.friendly_token[0, 20]
+      user.password = generated_password
+      user.password_confirmation = generated_password
+      user.name = auth.info.name
+      unless user.save
+        Rails.logger.debug "⚠️ User save failed: #{user.errors.full_messages}"
+      end
+    end
   end
 
   private

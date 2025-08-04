@@ -1,6 +1,6 @@
 <h1>ログイン</h1>
 <br>
-<%= form_with url: login_path, local: true, data: { turbo: false } do |form| %>
+<%= form_with url: new_user_session_path, local: true, data: { turbo: false } do |form| %>
   <div>
     <%= form.label :email %><br>
     <%= form.email_field :email %>
@@ -17,4 +17,6 @@
 <br>
   <p>アカウントをお持ちでない場合</p>
   <%= link_to "新規作成", signup_path %>
+<br>
+  <%= link_to "Googleでログイン", user_google_oauth2_omniauth_authorize_path %>
 <% end %>

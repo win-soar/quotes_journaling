@@ -8,6 +8,8 @@ ja:
         name: 名前
         password: パスワード
         password_confirmation: パスワード(確認)
+        bio: プロフィール
+        remember_me: ログイン情報を記憶する
       quote:
         title: クォーツ
         author: 発言者
