@@ -7,7 +7,6 @@ class CommentsController < ApplicationController
 
     if @comment.save
       respond_to do |format|
-        format.turbo_stream
         format.html { redirect_to quote_path(@quote), notice: 'コメントを投稿しました。'}
       end
     else
