@@ -7,7 +7,8 @@ module Users
       @user = User.from_omniauth(auth)
 
       if @user.persisted?
-        sign_in_and_redirect @user, event: :authentication
+        sign_in_and_redirect @user, event: :authentication, to: root_path
+        flash[:notice] = "Googleアカウントでログインしました。"
       else
         redirect_to root_path, alert: "認証に失敗しました: #{@user.errors.full_messages.join(', ')}"
       end

@@ -42,9 +42,7 @@ class User < ApplicationRecord
     user.password_confirmation = generated_password
     user.name ||= auth.info.name
 
-    unless user.save
-      Rails.logger.error "Save failed: #{user.errors.full_messages}"
-    end
+    Rails.logger.error "Save failed: #{user.errors.full_messages}" unless user.save
     user
   end
 
