@@ -37,7 +37,9 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_initialize
     user.email ||= auth.info.email
-    user.password ||= Devise.friendly_token[0, 20]
+    generated_password = Devise.friendly_token[0, 20]
+    user.password = generated_password
+    user.password_confirmation = generated_password
     user.name ||= auth.info.name
 
     unless user.save
