@@ -48,6 +48,14 @@ Rails.application.routes.draw do
   # ユーザーがいいねした投稿一覧
   get 'likes', to: 'likes#index', as: :user_likes
 
+  # ランキング
+  resources :rankings, only: [] do
+    collection do
+      get :total_likes
+      get :weekly_likes
+    end
+  end
+
   # ホーム
   get 'home/index'
 

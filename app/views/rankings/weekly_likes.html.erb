@@ -1,0 +1,8 @@
+<h2>週間いいねランキング</h2>
+
+<p>（集計期間: <%= 1.week.ago.to_date %> 〜 <%= Date.today %>）</p>
+
+<% @ranking.each do |like| %>
+  <% quote = Quote.find(like.quote_id) %>
+  <%= render 'quotes/quote', quote: quote %>
+<% end %>
