@@ -1,9 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-
   has_many :quotes, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_quotes, through: :likes, source: :quote
@@ -13,9 +8,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
-  validates :password, length: {minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-  validates :password, confirmation: true, presence: true, if: -> { provider.blank? && (new_record? || changes[:crypted_password]) }
-  validates :password_confirmation, presence: true, if: -> {new_record? || changes[:crypted_password] }
+  validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
+  validates :password_confirmation, presence: true, if: :password_required?
   validate :avatar_type
 
   devise :database_authenticatable, :registerable,
@@ -54,5 +48,9 @@ class User < ApplicationRecord
       errors.add(:avatar, 'は画像ファイルを選択してください')
       avatar.purge
     end
+  end
+
+  def password_required?
+    provider.blank? && (new_record? || password.present?)
   end
 end
