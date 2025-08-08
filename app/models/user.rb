@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :quotes
+  has_many :quotes, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_quotes, through: :likes, source: :quote
   has_many :comments, dependent: :destroy

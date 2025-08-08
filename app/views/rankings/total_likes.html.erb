@@ -1,0 +1,6 @@
+<h2>通算いいねランキング</h2>
+
+<% @ranking.each do |like| %>
+  <% quote = Quote.find(like.quote_id) %>
+  <%= render 'quotes/quote', quote: quote %>
+<% end %>
