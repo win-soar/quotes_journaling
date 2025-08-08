@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  devise :database_authenticatable, :registerable,
+  :recoverable, :rememberable, :validatable,
+  :omniauthable, omniauth_providers: [:google_oauth2]
+
   has_many :quotes, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_quotes, through: :likes, source: :quote
@@ -11,10 +15,6 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
   validates :password_confirmation, presence: true, if: :password_required?
   validate :avatar_type
-
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
 
   def liked?(quote)
     likes.exists?(quote_id: quote.id)
