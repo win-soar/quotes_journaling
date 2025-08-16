@@ -8,14 +8,12 @@ class DailyPostRecommendation
     end
   end
 
-  private
-
   def self.find_recommended_quote
     yesterday = Date.yesterday
     quotes = Quote.where(created_at: yesterday.beginning_of_day..yesterday.end_of_day)
-                .left_joins(:likes)
-                .group(:id)
-                .order('COUNT(likes.id) DESC', 'quotes.created_at ASC')
+                  .left_joins(:likes)
+                  .group(:id)
+                  .order('COUNT(likes.id) DESC', 'quotes.created_at ASC')
     quotes.first if quotes.any?
   end
 
@@ -36,5 +34,4 @@ class DailyPostRecommendation
     }
     LineClientService.client.push_message(user.line_user_id, message)
   end
-
 end
