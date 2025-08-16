@@ -13,6 +13,8 @@ services:
     environment:
       - RAILS_ENV=development
       - WEB_CONCURRENCY=1
+    env_file:
+      - .env.development
     stdin_open: true
     tty: true
 
