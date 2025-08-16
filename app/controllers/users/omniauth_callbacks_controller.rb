@@ -16,13 +16,13 @@ module Users
 
     def line
       auth = request.env['omniauth.auth']
-      if current_user
-        current_user.update(
-          line_user_id: auth.uid,
-          line_display_name: auth.info.name
-        )
-        redirect_to user_path(current_user), notice: 'LINEアカウントと連携しました'
-      end
+      return unless current_user
+
+      current_user.update(
+        line_user_id: auth.uid,
+        line_display_name: auth.info.name
+      )
+      redirect_to user_path(current_user), notice: 'LINEアカウントと連携しました'
     end
   end
 end
