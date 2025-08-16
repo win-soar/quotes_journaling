@@ -2,4 +2,5 @@
 //= link_tree ../builds
 //= link application.css
 //= link application.js
+//= link bootstrap.js
 //= link controllers/stimulus-loading.js
