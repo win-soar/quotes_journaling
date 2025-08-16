@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, omniauth_providers: [:google_oauth2, :line]
 
   has_many :quotes, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -38,6 +38,20 @@ class User < ApplicationRecord
 
     Rails.logger.error "Save failed: #{user.errors.full_messages}" unless user.save
     user
+  end
+
+  def self.from_line_omniauth(auth)
+    user = where(line_user_id: auth.uid).first_or_initialize
+    user.assign_attributes(
+      line_display_name: auth.info.name,
+      line_user_id: auth.uid
+    )
+    user.save
+    user
+  end
+
+  def with_line_account
+    where.not(line_user_id: nil)
   end
 
   private

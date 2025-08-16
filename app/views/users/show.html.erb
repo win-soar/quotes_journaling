@@ -8,6 +8,14 @@
 <% if @user == current_user %>
   <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'btn btn-primary' %>
   <%= link_to 'いいねした投稿', user_likes_path(@user), class: 'btn btn-outline-danger' %>
+  <% if current_user.line_user_id %>
+    <%= button_to "LINEアカウントと連携解除", unlink_line_account_path,
+      method: :delete,
+      class: "btn btn-success",
+      data: { confirm: "本当に連携を解除しますか？" } %>
+  <% else %>
+    <%= link_to "LINEアカウントと連携", user_line_omniauth_authorize_path, class: "btn btn-success" %>
+  <% end %>
 <% end %>
 
 <h4>過去のクォーツ</h4>

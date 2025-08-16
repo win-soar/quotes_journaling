@@ -280,6 +280,8 @@ Devise.setup do |config|
                     access_type: 'online'
                   }
 
+  config.omniauth :line, ENV['LINE_LOGIN_CHANNEL_ID'], ENV['LINE_LOGIN_CHANNEL_SECRET']
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

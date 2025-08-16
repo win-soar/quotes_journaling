@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || quotes_path
+    stored_location_for(resource) || root_path
   end
 
   private
