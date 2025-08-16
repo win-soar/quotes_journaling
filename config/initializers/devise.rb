@@ -280,7 +280,11 @@ Devise.setup do |config|
                     access_type: 'online'
                   }
 
-  config.omniauth :line, ENV['LINE_LOGIN_CHANNEL_ID'], ENV['LINE_LOGIN_CHANNEL_SECRET']
+  config.omniauth :line,
+                  ENV['LINE_CHANNEL_ID'],
+                  ENV['LINE_CHANNEL_SECRET'],
+                  scope: 'profile openid',
+                  prompt: 'consent'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
