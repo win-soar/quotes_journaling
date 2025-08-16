@@ -1,0 +1,2 @@
+module LineOmniauthHelper
+end

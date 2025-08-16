@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
+  }, path_names: {
+    line_omniauth_authorize: 'auth/line'
   }
+
+  delete '/unlink_line_account', to: 'users#unlink_line_account', as: :unlink_line_account
 
   authenticated :user do
     root 'quotes#index', as: :authenticated_root

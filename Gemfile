@@ -30,6 +30,10 @@ gem 'activeadmin'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
+gem 'omniauth-line'
+
+gem 'line-bot-api', group: [:development, :test, :production]
+gem 'whenever', require: false
 
 gem 'foreman'
 gem 'thor'
