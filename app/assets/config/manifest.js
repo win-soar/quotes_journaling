@@ -1,6 +1,3 @@
 //= link_tree ../images
-//= link_tree ../builds
+//= link_tree ../../../app/assets/builds
 //= link application.css
-//= link application.js
-//= link bootstrap.js
-//= link controllers/stimulus-loading.js

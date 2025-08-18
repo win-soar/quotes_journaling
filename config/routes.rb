@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     root 'home#index', as: :unauthenticated_root
   end
 
+  # LINE Webhook
+  post '/callback', to: 'line_webhook#callback'
+
   # 静的ページ
   get 'terms', to: 'static_pages#terms', as: :terms
   get 'privacy_policy', to: 'static_pages#privacy_policy', as: :privacy_policy

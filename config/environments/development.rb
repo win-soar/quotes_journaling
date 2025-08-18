@@ -14,6 +14,9 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  # メールやURLヘルパー用のホスト設定
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+
   # Enable server timing
   config.server_timing = true
 
@@ -70,7 +73,10 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  config.action_controller.default_protect_from_forgery = false
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = false
+
+  config.hosts << '.ngrok-free.app'
 end

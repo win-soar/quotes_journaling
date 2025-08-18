@@ -50,7 +50,7 @@ class User < ApplicationRecord
     user
   end
 
-  def with_line_account
+  def self.with_line_account
     where.not(line_user_id: nil)
   end
 

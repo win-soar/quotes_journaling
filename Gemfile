@@ -32,14 +32,12 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'omniauth-line'
 
-gem 'line-bot-api', group: [:development, :test, :production]
+gem 'line-bot-api', '~> 2.1', require: 'line/bot'
+
 gem 'whenever', require: false
 
 gem 'foreman'
 gem 'thor'
-
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"

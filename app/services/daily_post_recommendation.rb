@@ -1,10 +1,12 @@
 class DailyPostRecommendation
   def self.send_recommendations
-    recommended_quote = find_recommended_quote
-    return unless recommended_quote
+    # テスト用：常に最初の引用文を取得
+    test_quote = Quote.first
+    return unless test_quote
 
     User.with_line_account.find_each do |user|
-      send_recommendation(user, recommended_quote)
+      send_recommendation(user, test_quote)
+      puts "テストメッセージを送信しました: #{user.line_user_id}"
     end
   end
 
@@ -19,19 +21,17 @@ class DailyPostRecommendation
 
   def self.send_recommendation(user, quote)
     date_str = Date.current.strftime("%-m/%-d(%a)")
-    message = {
-      type: 'text',
-      text: <<~MESSAGE
-        #{date_str} 本日のおすすめクォーツ🌟
+    message = <<~MESSAGE
+      #{date_str} 本日のおすすめクォーツ🌟
 
-        "#{quote.content}"
-        "#{quote.author}"
+      "#{quote.title}"
+      "#{quote.author}"
 
-        "#{quote.user.name} さんの投稿"
+      "#{quote.user.name} さんの投稿"
 
-        サイトで見る: #{Rails.application.routes.url_helpers.quote_url(quote)}
-      MESSAGE
-    }
-    LineClientService.client.push_message(user.line_user_id, message)
+      サイトで見る: #{Rails.application.routes.url_helpers.quote_url(quote)}
+    MESSAGE
+
+    LineMessagingService.new.send_message(user.line_user_id, message)
   end
 end

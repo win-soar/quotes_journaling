@@ -26,6 +26,8 @@ module QuotesJournaling
     config.autoload_paths << Rails.root.join("app/services")
     config.eager_load_paths << Rails.root.join("app/services")
 
+    config.action_controller.default_protect_from_forgery = true
+
     config.i18n.default_locale = :ja
   end
 end
