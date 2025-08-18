@@ -1,22 +1,19 @@
 {
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@hotwired/turbo-rails": "^8.0.16",
     "@popperjs/core": "^2.11.8",
-    "autoprefixer": "^10.4.21",
     "bootstrap": "^5.3.5",
     "bootstrap-icons": "^1.11.3",
     "esbuild": "^0.25.6",
-    "nodemon": "^3.1.9",
-    "postcss": "^8.5.3",
-    "postcss-cli": "^11.0.1",
     "sass": "^1.89.2"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
-    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.css --no-source-map",
-    "dev": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --watch"
+    "build": "esbuild app/javascript/application.js --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:all": "yarn build && yarn build:css",
+    "dev": "yarn build --watch & yarn build:css --watch",
+    "start": "./bin/dev"
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.8.1"
 }
