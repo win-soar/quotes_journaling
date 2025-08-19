@@ -1,5 +1,6 @@
 ActiveAdmin.register LineEvent do
   menu priority: 5, label: "LINEイベント"
+
   actions :index, :show
 
   index do
@@ -31,29 +32,13 @@ ActiveAdmin.register LineEvent do
   filter :user_id
   filter :created_at
 
-  csv do
-    column :id
-    column :event_type
-    column :user_id
-    column(:message_text) { |event| event.message_text }
-    column :source_type
-    column :created_at
-  end
-
-  csv do
-    column :id
-    column :event_type
-    column :user_id
-    column(:message_text) { |event| event.message_text }
-    column :source_type
-    column :created_at
-  end
-
-  config.batch_actions = false
-
   controller do
     def scoped_collection
       super.recent
+    end
+
+    def permitted_params
+      params.permit!
     end
   end
 end

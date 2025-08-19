@@ -3,6 +3,10 @@ class LineEvent < ApplicationRecord
   validates :user_id, presence: true
   validates :payload, presence: true
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "event_type", "id", "message", "payload", "updated_at", "user_id"]
+  end
+
   scope :recent, -> { order(created_at: :desc) }
   scope :by_user, ->(user_id) { where(user_id: user_id) }
   scope :message_events, -> { where(event_type: 'message') }
