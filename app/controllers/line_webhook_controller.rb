@@ -10,6 +10,13 @@ class LineWebhookController < ApplicationController
       events = client.parse_events_from(body)
 
       events.each do |event|
+        line_event = LineEvent.create!(
+          event_type: event.type.to_s,
+          user_id: event['source']&.dig('userId'),
+          message: event.message&.to_s,
+          payload: event.as_json
+        )
+
         case event
         when Line::Bot::Event::Message
           case event.type
