@@ -1,6 +1,5 @@
 class DailyPostRecommendation
   def self.send_recommendations
-    # テスト用：常に最初の引用文を取得
     test_quote = Quote.first
     return unless test_quote
 
