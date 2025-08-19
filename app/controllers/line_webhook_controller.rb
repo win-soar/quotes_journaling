@@ -6,32 +6,49 @@ class LineWebhookController < ApplicationController
     if request.get?
       render plain: 'OK'
     elsif request.post?
-      body = request.body.read
-      events = client.parse_events_from(body)
+      request_body = request.body.read
+      Rails.logger.info "[LINE Webhook] Received request body: #{request_body}"
+      Rails.logger.info "[LINE Webhook] X-Line-Signature header: #{request.env['HTTP_X_LINE_SIGNATURE']}"
+
+      unless client.validate_signature(request_body, request.env['HTTP_X_LINE_SIGNATURE'].to_s)
+        Rails.logger.error "[LINE Webhook] Invalid signature"
+        return head :unauthorized
+      end
+
+      events = client.parse_events_from(request_body)
+      Rails.logger.info "[LINE Webhook] Parsed events: #{events.inspect}"
 
       events.each do |event|
-        line_event = LineEvent.create!(
-          event_type: event.type.to_s,
-          user_id: event['source']&.dig('userId'),
-          message: event.message&.to_s,
-          payload: event.as_json
-        )
+        Rails.logger.info "[LINE Webhook] Processing event: #{event.inspect}"
 
         case event
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
-            message = {
-              type: 'text',
-              text: "メッセージを受信しました: #{event.message['text']}"
-            }
-            client.reply_message(event['replyToken'], message)
+            begin
+              line_event = LineEvent.create!(
+                event_type: 'message',
+                user_id: event['source']['userId'],
+                message_text: event.message['text'],
+                source_type: event['source']['type'],
+                payload: event
+              )
+              Rails.logger.info "[LINE Webhook] Created LineEvent: #{line_event.id}"
+            rescue => e
+              Rails.logger.error "[LINE Webhook] Failed to create LineEvent: #{e.message}"
+              Rails.logger.error e.backtrace.join("\n")
+              next
+            end
           end
         end
       end
 
       head :ok
     end
+  rescue => e
+    Rails.logger.error "[LINE Webhook] Error in callback: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    head :internal_server_error
   end
 
   private
