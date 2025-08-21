@@ -6,14 +6,25 @@ class LineWebhookController < ApplicationController
     if request.get?
       render plain: 'OK'
     elsif request.post?
+
       request_body = request.body.read
+
+      Rails.logger.info "[LINE Webhook] === リクエスト受信 ==="
       Rails.logger.info "[LINE Webhook] Request body: #{request_body}"
       Rails.logger.info "[LINE Webhook] X-Line-Signature: #{request.env['HTTP_X_LINE_SIGNATURE']}"
 
       Rails.logger.info "[LINE Webhook] Channel Secret: #{ENV['LINE_CHANNEL_SECRET'].present? ? '設定済み' : '未設定'}"
+      Rails.logger.info "[LINE Webhook] Channel Token: #{ENV['LINE_CHANNEL_TOKEN'].present? ? '設定済み' : '未設定'}"
 
-      unless client.validate_signature(request_body, request.env['HTTP_X_LINE_SIGNATURE'].to_s)
+      signature = request.env['HTTP_X_LINE_SIGNATURE']
+      unless signature
+        Rails.logger.error "[LINE Webhook] X-Line-Signature ヘッダーが存在しません"
+        return head :bad_request
+      end
+
+      unless client.validate_signature(request_body, signature)
         Rails.logger.error "[LINE Webhook] 署名検証に失敗しました"
+        Rails.logger.error "[LINE Webhook] リクエスト署名: #{signature}"
         Rails.logger.error "[LINE Webhook] 期待する署名: #{OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), ENV['LINE_CHANNEL_SECRET'].to_s, request_body).unpack1('H*')}"
         return head :unauthorized
       end
@@ -57,9 +68,14 @@ class LineWebhookController < ApplicationController
   private
 
   def client
-    @client ||= Line::Bot::Client.new do |config|
-      config.channel_secret = ENV['LINE_CHANNEL_SECRET']
-      config.channel_token = ENV['LINE_CHANNEL_TOKEN']
+    @client ||= begin
+      Rails.logger.info "[LINE Webhook] Channel Secret: #{ENV['LINE_CHANNEL_SECRET'].present? ? '設定済み' : '未設定'}"
+      Rails.logger.info "[LINE Webhook] Channel Token: #{ENV['LINE_CHANNEL_TOKEN'].present? ? '設定済み' : '未設定'}"
+
+      Line::Bot::Client.new do |config|
+        config.channel_secret = ENV['LINE_CHANNEL_SECRET'].to_s
+        config.channel_token = ENV['LINE_CHANNEL_TOKEN'].to_s
+      end
     end
   end
 end
