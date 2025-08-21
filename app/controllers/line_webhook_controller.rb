@@ -7,11 +7,14 @@ class LineWebhookController < ApplicationController
       render plain: 'OK'
     elsif request.post?
       request_body = request.body.read
-      Rails.logger.info "[LINE Webhook] Received request body: #{request_body}"
-      Rails.logger.info "[LINE Webhook] X-Line-Signature header: #{request.env['HTTP_X_LINE_SIGNATURE']}"
+      Rails.logger.info "[LINE Webhook] Request body: #{request_body}"
+      Rails.logger.info "[LINE Webhook] X-Line-Signature: #{request.env['HTTP_X_LINE_SIGNATURE']}"
+
+      Rails.logger.info "[LINE Webhook] Channel Secret: #{ENV['LINE_CHANNEL_SECRET'].present? ? '設定済み' : '未設定'}"
 
       unless client.validate_signature(request_body, request.env['HTTP_X_LINE_SIGNATURE'].to_s)
-        Rails.logger.error "[LINE Webhook] Invalid signature"
+        Rails.logger.error "[LINE Webhook] 署名検証に失敗しました"
+        Rails.logger.error "[LINE Webhook] 期待する署名: #{OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), ENV['LINE_CHANNEL_SECRET'].to_s, request_body).unpack1('H*')}"
         return head :unauthorized
       end
 
