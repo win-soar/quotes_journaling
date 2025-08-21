@@ -28,6 +28,9 @@ module QuotesJournaling
 
     config.action_controller.default_protect_from_forgery = true
 
+    config.assets.enabled = true
+    config.assets.paths << Rails.root.join('app', 'javascript')
+
     config.i18n.default_locale = :ja
   end
 end
