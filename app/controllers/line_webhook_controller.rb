@@ -87,13 +87,8 @@ class LineWebhookController < ApplicationController
   private
 
   def client
-    @client ||= begin
-      Rails.logger.info "[LINE Webhook] Channel Secret: #{ENV['LINE_CHANNEL_SECRET'].present? ? '設定済み' : '未設定'}"
-      Rails.logger.info "[LINE Webhook] Channel Token: #{ENV['LINE_CHANNEL_TOKEN'].present? ? '設定済み' : '未設定'}"
-      line_client
-    rescue => e
-      Rails.logger.error "[LINE Webhook] Failed to initialize LINE Bot client: #{e.message}"
-      raise
-    end
+    Rails.logger.info "[LINE Webhook] Channel Secret: #{ENV['LINE_CHANNEL_SECRET'].present? ? '設定済み' : '未設定'}"
+    Rails.logger.info "[LINE Webhook] Channel Token: #{ENV['LINE_CHANNEL_TOKEN'].present? ? '設定済み' : '未設定'}"
+    line_client
   end
 end
