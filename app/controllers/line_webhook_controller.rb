@@ -45,40 +45,41 @@ class LineWebhookController < ApplicationController
 
         Rails.logger.info "[LINE Webhook] 署名検証に成功しました"
 
-      events = client.parse_events_from(request_body)
-      Rails.logger.info "[LINE Webhook] Parsed events: #{events.inspect}"
+        events = client.parse_events_from(request_body)
+        Rails.logger.info "[LINE Webhook] Parsed events: #{events.inspect}"
 
-      events.each do |event|
-        Rails.logger.info "[LINE Webhook] Processing event: #{event.inspect}"
+        events.each do |event|
+          Rails.logger.info "[LINE Webhook] Processing event: #{event.inspect}"
 
-        case event
-        when Line::Bot::Event::Message
-          case event.type
-          when Line::Bot::Event::MessageType::Text
-            begin
-              line_event = LineEvent.create!(
-                event_type: 'message',
-                user_id: event['source']['userId'],
-                message_text: event.message['text'],
-                source_type: event['source']['type'],
-                payload: event
-              )
-              Rails.logger.info "[LINE Webhook] Created LineEvent: #{line_event.id}"
-            rescue => e
-              Rails.logger.error "[LINE Webhook] Failed to create LineEvent: #{e.message}"
-              Rails.logger.error e.backtrace.join("\n")
-              next
+          case event
+          when Line::Bot::Event::Message
+            case event.type
+            when Line::Bot::Event::MessageType::Text
+              begin
+                line_event = LineEvent.create!(
+                  event_type: 'message',
+                  user_id: event['source']['userId'],
+                  message_text: event.message['text'],
+                  source_type: event['source']['type'],
+                  payload: event
+                )
+                Rails.logger.info "[LINE Webhook] Created LineEvent: #{line_event.id}"
+              rescue StandardError => e
+                Rails.logger.error "[LINE Webhook] Failed to create LineEvent: #{e.message}"
+                Rails.logger.error e.backtrace.join("\n")
+                next
+              end
             end
           end
         end
-      end
 
-      head :ok
+        head :ok
+      rescue StandardError => e
+        Rails.logger.error "[LINE Webhook] Error in callback: #{e.message}"
+        Rails.logger.error e.backtrace.join("\n")
+        head :internal_server_error
+      end
     end
-  rescue => e
-    Rails.logger.error "[LINE Webhook] Error in callback: #{e.message}"
-    Rails.logger.error e.backtrace.join("\n")
-    head :internal_server_error
   end
 
   private

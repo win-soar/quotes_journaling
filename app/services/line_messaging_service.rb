@@ -5,7 +5,7 @@ class LineMessagingService
       text: message
     }
     LineClientService.client.push_message(user_id, message)
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
     false
   end
