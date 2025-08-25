@@ -1,4 +1,5 @@
 require_relative "boot"
+require 'line/bot'
 
 require "rails"
 # Pick the frameworks you want:
