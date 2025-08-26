@@ -14,37 +14,7 @@ class LineWebhookController < ApplicationController
     elsif request.post?
       begin
         request_body = request.body.read.force_encoding('UTF-8')
-        Rails.logger.info "[LINE Webhook] POSTリクエスト受信・ボディ: \\n#{request_body}"
-        head :ok
-      rescue StandardError => e
-        Rails.logger.error "[LINE Webhook] Error in callback: #{e.message}"
-        Rails.logger.error e.backtrace.join("\n")
-        head :internal_server_error
-      end
-          Rails.logger.info "[LINE Webhook] Processing event: #{event.inspect}"
-
-          case event
-          when Line::Bot::Event::Message
-            case event.type
-            when Line::Bot::Event::MessageType::Text
-              begin
-                line_event = LineEvent.create!(
-                  event_type: 'message',
-                  user_id: event['source']['userId'],
-                  message_text: event.message['text'],
-                  source_type: event['source']['type'],
-                  payload: event
-                )
-                Rails.logger.info "[LINE Webhook] Created LineEvent: #{line_event.id}"
-              rescue StandardError => e
-                Rails.logger.error "[LINE Webhook] Failed to create LineEvent: #{e.message}"
-                Rails.logger.error e.backtrace.join("\n")
-                next
-              end
-            end
-          end
-        end
-
+        Rails.logger.info "[LINE Webhook] POSTリクエスト受信・ボディ: \n#{request_body}"
         head :ok
       rescue StandardError => e
         Rails.logger.error "[LINE Webhook] Error in callback: #{e.message}"
