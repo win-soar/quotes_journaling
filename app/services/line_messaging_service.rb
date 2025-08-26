@@ -1,10 +1,16 @@
 class LineMessagingService
   def send_message(user_id, message)
-    message = {
-      type: 'text',
-      text: message
+    body = {
+      to: user_id,
+      messages: [
+        {
+          type: 'text',
+          text: message
+        }
+      ]
     }
-    LineClientService.client.push_message(user_id, message)
+    response = LineClientService.messaging_api_client.push_message(body)
+    response
   rescue StandardError => e
     Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
     false
