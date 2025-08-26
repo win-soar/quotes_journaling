@@ -15,6 +15,23 @@ class LineWebhookController < ApplicationController
       begin
         request_body = request.body.read.force_encoding('UTF-8')
         Rails.logger.info "[LINE Webhook] POSTリクエスト受信・ボディ: \n#{request_body}"
+        json = JSON.parse(request_body) rescue nil
+        if json && json['events'].is_a?(Array)
+          json['events'].each do |event|
+            begin
+              LineEvent.create!(
+                event_type: event['type'],
+                user_id: event.dig('source', 'userId'),
+                payload: event
+              )
+              Rails.logger.info "[LINE Webhook] LineEventを保存しました: user_id=#{event.dig('source', 'userId')}, event_type=#{event['type']}"
+            rescue ActiveRecord::RecordInvalid => e
+              Rails.logger.error "[LINE Webhook] LineEvent保存失敗: #{e.message}"
+            end
+          end
+        else
+          Rails.logger.warn "[LINE Webhook] events配列が見つかりませんでした"
+        end
         head :ok
       rescue StandardError => e
         Rails.logger.error "[LINE Webhook] Error in callback: #{e.message}"
