@@ -32,7 +32,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'omniauth-line'
 
-gem 'line-bot-api', '~> 2.1', require: 'line/bot'
+gem 'line-bot-api', '~> 2.1'
 
 gem 'whenever', require: false
 
