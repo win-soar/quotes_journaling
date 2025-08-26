@@ -9,8 +9,7 @@ class LineMessagingService
         }
       ]
     }
-    response = LineClientService.messaging_api_client.push_message(body)
-    response
+    LineClientService.messaging_api_client.push_message(body)
   rescue StandardError => e
     Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
     false
