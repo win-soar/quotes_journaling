@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'gemfile_lock', to: 'debug#gemfile_lock'
+    get 'line_bot_initializer', to: 'debug#line_bot_initializer'
+  end
   # テスト用LINE送信エンドポイント
   get 'line_test/send_test_message', to: 'line_test#send_test_message'
 
