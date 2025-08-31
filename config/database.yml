@@ -50,6 +50,8 @@ test:
 #
 production:
   <<: *default
-  database: quotes_journaling_production
-  username: quotes_journaling
+  host: <%= ENV["POSTGRES_HOST"] || "db" %>
+  database: <%= ENV["POSTGRES_DB"] || "quotes_journaling_production" %>
+  username: <%= ENV["POSTGRES_USER"] || "quotes_journaling" %>
   password: <%= ENV["QUOTES_JOURNALING_DATABASE_PASSWORD"] %>
+  sslmode: disable
