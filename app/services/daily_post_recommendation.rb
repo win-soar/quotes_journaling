@@ -9,6 +9,17 @@ class DailyPostRecommendation
     end
   end
 
+  def self.send_test_message_to_user(line_user_id)
+    test_quote = Quote.first
+    return unless test_quote
+
+    user = User.find_by(line_user_id: line_user_id)
+    return unless user
+
+    send_recommendation(user, test_quote)
+    puts "テストメッセージを送信しました: #{user.line_user_id}"
+  end
+
   def self.find_recommended_quote
     yesterday = Date.yesterday
     quotes = Quote.where(created_at: yesterday.beginning_of_day..yesterday.end_of_day)

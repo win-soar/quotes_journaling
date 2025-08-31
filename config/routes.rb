@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # テスト用LINE送信エンドポイント
+  get 'line_test/send_test_message', to: 'line_test#send_test_message'
+
   # Devise & ActiveAdmin
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
