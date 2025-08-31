@@ -1,4 +1,4 @@
-class Admin::DebugController < ApplicationController
+class Admin::DebugController < ActiveAdmin::BaseController
   before_action :authenticate_admin_user!
 
   def gemfile_lock
