@@ -1,4 +1,4 @@
-require 'line/bot/v2/messaging_api/api_client'
+require 'line/bot'
 
 class LineWebhookController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:callback]
