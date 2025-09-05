@@ -9,7 +9,10 @@ class LineMessagingService
         }
       ]
     }
-    LineClientService.messaging_api_client.push_message(body)
+    LineClientService.messaging_api_client.push_message(
+      channel_access_token: LineClientService.channel_token,
+      body: body
+    )
   rescue StandardError => e
     Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
     false
