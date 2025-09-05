@@ -1,11 +1,11 @@
 class DailyPostRecommendation
-  def self.send_recommendations
-    test_quote = Quote.first
-    return unless test_quote
+  def self.send_daily_recommendations
+    quote = find_recommended_quote
+    return unless quote
 
     User.with_line_account.find_each do |user|
-      send_recommendation(user, test_quote)
-      puts "テストメッセージを送信しました: #{user.line_user_id}"
+      send_recommendation(user, quote)
+      puts "おすすめ名言を送信しました: #{user.line_user_id}"
     end
   end
 
