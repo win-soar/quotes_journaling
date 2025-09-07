@@ -212,7 +212,7 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.5)
-    line-bot-api (2.1.1)
+    line-bot-api (2.2.0)
       base64 (~> 0.2)
       multipart-post (~> 2.4)
     lint_roller (1.1.0)
@@ -485,7 +485,7 @@ DEPENDENCIES
   foreman
   image_processing (~> 1.2)
   jbuilder
-  line-bot-api (~> 2.1)
+  line-bot-api (>= 2.2.0)
   omniauth
   omniauth-google-oauth2
   omniauth-line
