@@ -10,7 +10,10 @@ class LineNotification
           }
         ]
       }
-      response = LineClientService.messaging_api_client.push_message(body)
+      response = LineClientService.messaging_api_client.push_message(
+        channel_access_token: LineClientService.channel_token,
+        body: body
+      )
       { status: response.status, body: response.body }
     end
   end
