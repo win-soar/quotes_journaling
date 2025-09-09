@@ -9,15 +9,25 @@ class DailyPostRecommendation
     end
   end
 
-  def self.send_test_message_to_user(line_user_id)
-    test_quote = Quote.first
-    return unless test_quote
+  def self.send_test_message_to_user(user_id)
+    message = Line::Bot::V2::MessagingApi::TextMessage.new(
+      text: "9/#{Date.today.day}(#{I18n.t('date.abbr_day_names')[Date.today.wday]}) 本日のおすすめクォーツ🌟\n\nテストメッセージです"
+    )
 
-    user = User.find_by(line_user_id: line_user_id)
-    return unless user
+    request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
+      to: user_id,
+      messages: [message]
+    )
 
-    send_recommendation(user, test_quote)
-    puts "テストメッセージを送信しました: #{user.line_user_id}"
+    begin
+      LineClientService.messaging_api_client.push_message(
+        push_message_request: request
+      )
+      Rails.logger.info "テストメッセージを送信しました: #{user_id}"
+    rescue => e
+      Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
+      raise
+    end
   end
 
   def self.find_recommended_quote

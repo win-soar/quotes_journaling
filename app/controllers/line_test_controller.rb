@@ -1,8 +1,26 @@
+require 'line-bot-api'
+
 class LineTestController < ApplicationController
-  # GET /line_test/send_test_message?user_id=xxxx
   def send_test_message
     user_id = params[:user_id]
-    result = DailyPostRecommendation.send_test_message_to_user(user_id)
-    render plain: "送信結果: #{result.inspect}"
+
+    message = Line::Bot::V2::MessagingApi::TextMessage.new(
+      text: "テストメッセージです"
+    )
+
+    request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
+      to: user_id,
+      messages: [message]
+    )
+
+    begin
+      LineClientService.messaging_api_client.push_message(
+        push_message_request: request
+      )
+      render plain: "テストメッセージを送信しました: #{user_id}"
+    rescue => e
+      logger.error "LINEメッセージ送信エラー: #{e.message}"
+      render plain: "メッセージ送信に失敗しました", status: :internal_server_error
+    end
   end
 end
