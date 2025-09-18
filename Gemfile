@@ -22,6 +22,7 @@ gem 'image_processing', '~> 1.2'
 
 gem 'sassc-rails'
 gem "bootstrap", "~> 5.3.0"
+gem "bootstrap-icons", "~> 1.0.15"
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'aws-sdk-s3', '~> 1.119.0', require: false
 gem 'devise'
