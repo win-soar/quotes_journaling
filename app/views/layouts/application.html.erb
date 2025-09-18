@@ -3,6 +3,7 @@
   <head>
     <title>QuotesJournaling</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -13,13 +14,13 @@
   </head>
 
   <body>
-    <header>
+    <header class="header">
       <h1><%= link_to 'Quotes Journaling', root_path %></h1><br>
     </header>
     <%= render 'shared/flash' %>
     <%= yield %>
     <hr>
-    <footer>
+    <footer class="footer">
       <%= link_to "利用規約", terms_path %>
       <%= link_to "プライバシーポリシー", privacy_policy_path %>
     </footer>

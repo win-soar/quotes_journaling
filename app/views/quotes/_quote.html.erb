@@ -1,4 +1,4 @@
-<div>
+<div class="quote-card mb-3 p-3 quote-category--<%= quote.category.downcase.gsub(' ', '-') %>">
   <div class="user-info">
   <%= avatar_image_tag(quote.user) %>
   <p><%= link_to quote.user.name, user_path(quote.user) %></p>
@@ -12,4 +12,3 @@
 
   <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
 </div>
-<hr>

@@ -122,6 +122,8 @@ GEM
       msgpack (~> 1.2)
     bootstrap (5.3.5)
       popper_js (>= 2.11.8, < 3)
+    bootstrap-icons (1.0.15)
+      nokogiri (~> 1)
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -478,6 +480,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   bootstrap (~> 5.3.0)
+  bootstrap-icons (~> 1.0.15)
   capybara
   debug
   devise
