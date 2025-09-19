@@ -1,4 +1,4 @@
-<div class="user-info">
+<div class="user-avatar">
   <%= avatar_image_tag(@user, size: "100x100") %>
   <h2><%= @user.name %></h2>
 </div>
@@ -8,6 +8,7 @@
 <% if @user == current_user %>
   <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'btn btn-primary' %>
   <%= link_to 'いいねした投稿', user_likes_path(@user), class: 'btn btn-outline-danger' %>
+  <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'btn btn-danger' %>
   <% if current_user.line_user_id %>
     <%= button_to "LINEアカウントと連携解除", unlink_line_account_path,
       method: :delete,

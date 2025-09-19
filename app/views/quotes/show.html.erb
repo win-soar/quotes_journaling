@@ -1,6 +1,6 @@
 <h2><%= "\"#{@quote.title}\"" %></h2><br>
 
-<div class="user-info">
+<div class="user-avatar">
   <%= avatar_image_tag(@quote.user, size: "75x75") %>
   <h4><strong>投稿者:</strong><%= link_to @quote.user.name, user_path(@quote.user) %></h4>
 </div>
@@ -29,7 +29,7 @@
 
 <%= render @comments %>
 
-<div class="user-info">
+<div class="user-avatar">
   <%= avatar_image_tag(current_user) %>
 </div>
 

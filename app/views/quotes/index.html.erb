@@ -1,14 +1,5 @@
-<div style="text-align: right;">
-  <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'btn btn-danger' %>
-</div>
-
-<div>
-  <%= link_to 'クォーツを投稿する', new_quote_path, class: 'btn btn-primary' %>
-  <%= link_to '検索画面', search_quotes_path, class: 'btn btn-success' %>
-  <%= link_to 'マイページ', user_path(current_user), class: 'btn btn-outline-dark' %>
-  <%= link_to '週間ランキング', weekly_likes_rankings_path %>
-  <%= link_to '通算ランキング', total_likes_rankings_path %>
-</div>
-<br>
+<%= link_to new_quote_path, class: "fab" do %>
+  <%= image_tag("pencil.jpg", alt: "投稿", class: "fab-icon") %>
+<% end %>
 
 <%= render partial: 'quotes/quote', collection: @quotes, as: :quote %>
