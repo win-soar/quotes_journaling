@@ -1,7 +1,7 @@
 <div class="quote-card mb-3 p-3 quote-category--<%= quote.category.downcase.gsub(' ', '-') %>">
-  <div class="user-info">
-  <%= avatar_image_tag(quote.user) %>
-  <p><%= link_to quote.user.name, user_path(quote.user) %></p>
+  <div class="user-avatar">
+    <%= avatar_image_tag(quote.user) %>
+    <p><%= link_to quote.user.name, user_path(quote.user) %></p>
   </div>
 
   <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>

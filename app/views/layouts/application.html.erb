@@ -14,15 +14,11 @@
   </head>
 
   <body>
-    <header class="header">
-      <h1><%= link_to 'Quotes Journaling', root_path %></h1><br>
-    </header>
+    <%= render 'layouts/header' %>
+    <% if user_signed_in? %><hr><% end %>
     <%= render 'shared/flash' %>
     <%= yield %>
     <hr>
-    <footer class="footer">
-      <%= link_to "利用規約", terms_path %>
-      <%= link_to "プライバシーポリシー", privacy_policy_path %>
-    </footer>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

@@ -1,0 +1,15 @@
+<header class="header">
+  <h1><%= link_to 'Quotes Journaling', root_path %></h1><br>
+  <% if user_signed_in? %>
+    <div class="header-menu">
+      <%= link_to search_quotes_path do %>
+        <%= image_tag("search.png", alt: "検索", class: "search-icon") %>
+      <% end %>
+      <%= link_to '週間ランキング', weekly_likes_rankings_path %>
+      <%= link_to '通算ランキング', total_likes_rankings_path %>
+      <%= link_to user_path(current_user) do %>
+        <%= avatar_image_tag(current_user, size: "50x50") %>
+      <% end %>
+    </div>
+  <% end %>
+</header>
