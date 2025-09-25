@@ -1,40 +1,42 @@
-<h2><%= "\"#{@quote.title}\"" %></h2><br>
-
-<div class="user-avatar">
-  <%= avatar_image_tag(@quote.user, size: "75x75") %>
-  <h4><strong>投稿者:</strong><%= link_to @quote.user.name, user_path(@quote.user) %></h4>
+<div class="quote-card mb-3 p-3 quote-category--<%= @quote.category.downcase.gsub(' ', '-') %>">
+  <h2><%= "\"#{@quote.title}\"" %></h2>
 </div>
 
-<br>
-<p><strong>Author of the Quotes:</strong> <%= @quote.author %></p>
-<p><strong>Quotes type:</strong> <%= @quote.category %></p>
-<% if @quote.source.present? %>
-  <p><strong>Source of the Quotes:</strong> <%= @quote.source %>（<%= @quote.source_writer %>）</p>
-<% end %>
-<p><strong>note:</strong><br><%= simple_format(@quote.note) %></p>
+<div class="quote-of-user">
+  <%= avatar_image_tag(@quote.user, size: "75x75") %>
+  <h4><strong>投稿者:</strong><%= link_to @quote.user.name, user_path(@quote.user) %></h4>
 
-<% if @quote.user == current_user %>
-  <%= link_to '投稿を編集', edit_quote_path(@quote), class: 'btn btn-success btn-sm' %>
-<% end %>
+  <div class="quote-of-user-buttons">
+    <% if @quote.user == current_user %>
+      <%= link_to '投稿を編集', edit_quote_path(@quote), class: 'btn btn-success' %>
+    <% end %>
 
-<% if @quote.user == current_user %>
-  <%= button_to '投稿を削除', quote_path(@quote), method: :delete, data: { confirm: 'このクォーツを削除しますか？' }, class: 'btn btn-danger btn-sm' %>
-<% end %>
+    <% if @quote.user == current_user %>
+      <%= button_to '投稿を削除', quote_path(@quote), method: :delete, data: { confirm: 'このクォーツを削除しますか？' }, class: 'btn btn-danger' %>
+    <% end %>
 
-<% if @quote.user != current_user %>
-  <%= link_to '通報', new_quote_report_path(@quote), class: 'btn btn-warning btn-sm' %>
-<% end %>
+    <% if @quote.user != current_user %>
+      <%= link_to '通報', new_quote_report_path(@quote), class: 'btn btn-warning' %>
+    <% end %>
+  </div>
 
-<br>
+</div>
+
+<div class="quote-info">
+  <p><strong>Author of the Quotes:</strong> <%= @quote.author %></p>
+  <p><strong>Quotes type:</strong> <%= @quote.category %></p>
+  <% if @quote.source.present? %>
+    <p><strong>Source of the Quotes:</strong> <%= @quote.source %>（<%= @quote.source_writer %>）</p>
+  <% end %>
+  <p><strong>note:</strong><br><%= simple_format(@quote.note) %></p>
+</div>
+
+<hr>
 
 <%= render @comments %>
 
-<div class="user-avatar">
-  <%= avatar_image_tag(current_user) %>
-</div>
-
 <% if @comment.errors.any? %>
-  <div class="alert alert-danger">
+  <div class="alert flash-message">
     <ul>
       <% @comment.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -43,11 +45,22 @@
   </div>
 <% end %>
 
-<%= form_with(model: [@quote, @comment], local: true) do |form| %>
-  <div class="mb-2">
-    <%= form.text_area :body, rows: 3, class: "form-control", placeholder: 'コメントを入力' %>
+<div class="comment-form">
+  <div class="user-avatar">
+    <%= avatar_image_tag(current_user) %>
   </div>
-  <%= form.submit 'コメントする', class: "btn btn-primary" %>
-<% end %>
 
-<%= link_to "戻る", quotes_path, class: "btn btn-secondary" %>
+  <%= form_with(model: [@quote, @comment], local: true) do |form| %>
+    <div>
+      <%= form.text_area :body, rows: 3, class: "form-control", placeholder: 'コメントを入力' %>
+    </div>
+
+    <div>
+      <%= form.submit 'コメントする', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="return-button">
+  <%= link_to "戻る", quotes_path, class: "btn btn-secondary" %>
+</div>

@@ -1,10 +1,10 @@
 <div class="comment border rouded p-2 my-2">
-  <div class="user-avatar">
+  <div class="comment-of-user">
     <%= avatar_image_tag(comment.user) %>
     <p><%= link_to comment.user.name, user_path(comment.user) %></p>
   </div>
   <p><%= comment.body %></p>
-  <p class="text-muted small"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></p>
+  <p class="text small"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></p>
 
   <% if comment.user != current_user %>
     <%= link_to '通報', new_comment_report_path(comment), class: 'btn btn-warning btn-sm' %>
