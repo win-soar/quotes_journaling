@@ -369,3 +369,95 @@ div.quote-card {
     font-weight: bold;
   }
 }
+
+// クォーツ投稿フォーム
+.quote-form {
+  margin-left: 30px;
+  margin-right: 30px;
+
+  .text-field {
+    width:75vw;
+    flex: auto;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+}
+
+.quote-form-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 30px;
+
+  h6 {
+    margin-left: 40px;
+  }
+}
+
+input[type="radio"] {
+  display: none;
+
+  + label {
+    display: inline-block;
+    font-size: 2rem;
+    margin-right: 1em;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #f0f0f0;
+      color: #000000;
+      border-radius: 4px;
+    }
+  }
+
+  &:checked + label {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+  }
+}
+input[type="radio"][value="historical"]:checked + label {
+  background-color: #d6f8c1;
+  color: #000000;
+}
+input[type="radio"][value="celebrity"]:checked + label {
+  background-color: #f8c1c1;
+  color: #000000;
+}
+input[type="radio"][value="fictional"]:checked + label {
+  background-color: #c1ddf8;
+  color: #000000;
+}
+input[type="radio"][value="original"]:checked + label {
+  background-color: #f8e9c1;
+  color: #000000;
+}
+
+// ツールチップスタイル
+label[for^="category_"] {
+  position: relative;
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    pointer-events: none;
+    margin-top: 10px;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}

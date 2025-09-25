@@ -1,4 +1,10 @@
-<h2>クォーツを投稿</h2><br>
+<div class="quote-form-title">
+  <h1>クォーツを投稿</h1>
+  <h6>*のある項目は必須項目です。</h6>
+</div>
 
 <%= render 'form' %>
-<%= link_to '戻る', root_path %>
+
+<div class="return-button">
+  <%= link_to "戻る", quotes_path, class: "btn btn-secondary" %>
+</div>
