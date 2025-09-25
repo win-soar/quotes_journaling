@@ -1,14 +1,19 @@
 <div class="quote-card mb-3 p-3 quote-category--<%= quote.category.downcase.gsub(' ', '-') %>">
-  <div class="user-avatar">
+  <div class="quote-user">
     <%= avatar_image_tag(quote.user) %>
-    <p><%= link_to quote.user.name, user_path(quote.user) %></p>
+    <p class="quote-user-name">
+      <%= link_to quote.user.name, user_path(quote.user) %>
+    </p>
   </div>
 
-  <blockquote><%= link_to "\"#{quote.title}\"", quote_path(quote) %></blockquote>
+  <blockquote class="quote-body">
+    <%= link_to "\"#{quote.title}\"", quote_path(quote) %>
+  </blockquote>
 
-  <small> - <%= quote.author %></small><br>
+  <p class="quote-author"> - <%= quote.author %></p>
 
-  <%= render partial: "likes/like_button", locals: { quote: quote } %>
-
-  <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
+  <div class="quote-footer">
+    <%= render partial: "likes/like_button", locals: { quote: quote } %>
+    <%= quote.created_at.strftime("%Y-%m-%d %H:%M") %>
+  </div>
 </div>
