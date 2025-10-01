@@ -1,48 +1,62 @@
-<h2>Explore</h2>
+<div class="quote-search">
 
-<br>
+  <div class="search-header">
+    <h1>Explore</h1>
+    <p>クォーツを検索する</p>
+  </div>
 
-<%= form_with url: search_result_quotes_path, method: :get, local:true do |form| %>
-  <div data-controller="autocomplete" class="mb-3 position-relative">
-    <%= form.label :title %>
-    <%= form.text_field :title, placeholder: "クォーツで検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "title" } %>
-    <div data-autocomplete-target="results" class="autocomplete-results"></div>
-  </div><br>
+  <br>
 
-  <div data-controller="autocomplete" class="mb-3 position-relative">
-    <%= form.label :author %>
-    <%= form.text_field :author, placeholder: "発言者で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "author" } %>
-    <div data-autocomplete-target="results" class="autocomplete-results"></div>
-  </div><br>
+  <%= form_with url: search_result_quotes_path, method: :get, local:true do |form| %>
+    <div data-controller="autocomplete" class="mb-3 position-relative">
+      <%= form.label :title, class: "search-item" %>
+      <%= form.text_field :title, class: "text-field", placeholder: "クォーツで検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "title" } %>
+      <div data-autocomplete-target="results" class="autocomplete-results"></div>
+    </div><br>
 
-  <div>
-    <%= form.label :category, "カテゴリーを選択" %><br>
+    <div data-controller="autocomplete" class="mb-3 position-relative">
+      <%= form.label :author, class: "search-item" %>
+      <%= form.text_field :author, class: "text-field", placeholder: "発言者で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "author" } %>
+      <div data-autocomplete-target="results" class="autocomplete-results"></div>
+    </div><br>
+
+</div>
+
+  <div class="quote-form">
+    <%= form.label :category, "Quotes type (クォーツの種類)"%><br>
+    <br>
     <% Quote.categories.each_key do |category| %>
-      <%= form.radio_button :category, category %>
-      <%= form.label "category_#{category}", category.humanize %><br>
+      <%= form.radio_button :category, category, id: "category_#{category}" %>
+      <label for="category_<%= category %>" data-tooltip="<%= category == 'historical' ? '歴史上の偉人' : category == 'celebrity' ? '現代の著名人' : category == 'fictional' ? '作品に登場するキャラクター' : 'あなた自身 もしくは身近な人' %>">
+        <%= category.humanize %>
+      </label>
     <% end %>
   </div><br>
 
+<div class="quote-search">
+
   <div>
-    <%= form.label :note %>
-    <%= form.text_field :note, placeholder: "紹介内容で検索" %>
+    <%= form.label :note, class: "search-item" %>
+    <%= form.text_field :note, class: "text-field", placeholder: "紹介内容で検索" %>
   </div><br>
 
   <div data-controller="autocomplete" class="mb-3 position-relative">
-    <%= form.label :source %>
-    <%= form.text_field :source, placeholder: "出典で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "source" } %>
+    <%= form.label :source, class: "search-item" %>
+    <%= form.text_field :source, class: "text-field", placeholder: "出典で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "source" } %>
     <div data-autocomplete-target="results" class="autocomplete-results"></div>
   </div><br>
 
   <div data-controller="autocomplete" class="mb-3 position-relative">
-    <%= form.label :source_writer %>
-    <%= form.text_field :source_writer, placeholder: "出典の著者で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "source_writer" } %>
+    <%= form.label :source_writer, class: "search-item" %>
+    <%= form.text_field :source_writer, class: "text-field", placeholder: "出典の著者で検索", data: { autocomplete_target: "input", action: "input->autocomplete#search", field: "source_writer" } %>
     <div data-autocomplete-target="results" class="autocomplete-results"></div>
   </div><br>
 
   <div>
-    <%= form.submit "Explore" %>
+    <%= form.submit "Explore", class: "btn btn-primary", style: "font-size: 1.5rem;" %>
   </div><br>
 
-  <%= link_to '戻る', root_path %>
-<% end %>
+  <%= link_to '戻る', root_path, class: "btn btn-secondary" %>
+  <% end %>
+
+</div>
