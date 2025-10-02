@@ -5,7 +5,11 @@
     "@popperjs/core": "^2.11.8"
   },
   "scripts": {
-    "start": "./bin/dev"
+    "start": "./bin/dev",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
   },
-  "packageManager": "yarn@4.8.1"
+  "packageManager": "yarn@4.8.1",
+  "devDependencies": {
+    "esbuild": "^0.25.10"
+  }
 }
