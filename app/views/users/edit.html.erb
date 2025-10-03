@@ -1,24 +1,28 @@
-<h2>プロフィールを編集</h2><br>
+<div class="user-edit">
 
-<%= render 'shared/error_messages', object: @user %>
+  <h2>プロフィールを編集</h2><br>
 
-<%= form_with(model: @user, local: true) do |form| %>
-  <div>
-    <%= form.label :name, 'ユーザー名' %><br>
-    <%= form.text_field :name %>
-  </div>
-<br>
-  <div>
-    <%= form.label :bio, '自己紹介' %><br>
-    <%= form.text_area :bio, rows: 10, cols: 50 %>
-  </div>
-<br>
-  <div>
-    <%= form.label :avatar, 'プロフィール画像' %>
-    <%= form.file_field :avatar, accept: 'image/*' %>
-  </div>
-<br>
-  <div>
-    <%= form.submit '更新する' %>
-  </div>
-<% end %>
+  <%= render 'shared/error_messages', object: @user %>
+
+  <%= form_with(model: @user, local: true) do |form| %>
+    <div>
+      <%= form.label :name, 'ユーザー名' %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+  <br>
+    <div>
+      <%= form.label :bio, '自己紹介' %><br>
+      <%= form.text_area :bio, rows: 10, cols: 50, class: "form-control" %>
+    </div>
+  <br>
+    <div>
+      <%= form.label :avatar, 'プロフィール画像' %>
+      <%= form.file_field :avatar, accept: 'image/*', class: "form-control" %>
+    </div>
+  <br>
+    <div>
+      <%= form.submit '更新する', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>

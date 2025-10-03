@@ -65,8 +65,8 @@ class QuotesController < ApplicationController
     if params[:author].present?
       @quotes = @quotes.where("author ILIKE ?", "%#{params[:author]}%")
     end
-    if params[:category].present?
-      @quotes = @quotes.where(category: Quote.categories[params[:category]])
+    if params[:categories].present?
+      @quotes = @quotes.where(category: params[:categories].map { |c| Quote.categories[c] })
     end
     if params[:note].present?
       @quotes = @quotes.where("note ILIKE ?", "%#{params[:note]}%")
