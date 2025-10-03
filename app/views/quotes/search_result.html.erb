@@ -1,12 +1,6 @@
-<div style="text-align: right;">
-  <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'btn btn-danger' %>
-</div>
-
-<div>
-  <%= link_to 'クォーツを投稿する', new_quote_path, class: 'btn btn-primary' %>
-  <%= link_to '検索画面', search_quotes_path, class: 'btn btn-primary' %>
-</div>
-<br>
+<%= link_to new_quote_path, class: "fab" do %>
+  <%= image_tag("pencil.jpg", alt: "投稿", class: "fab-icon") %>
+<% end %>
 
 <ul>
   <% if params[:title].present? %>
@@ -17,7 +11,13 @@
     <li>Author: <%= params[:author] %></li>
   <% end %>
 
-  <% if params[:category].present? %>
+  <% if params[:categories].present? %>
+    <li>Category:
+      <% params[:categories].each_with_index do |cat, i| %>
+        <%= cat.humanize %><%= ", " unless i == params[:categories].size - 1 %>
+      <% end %>
+    </li>
+  <% elsif params[:category].present? %>
     <li>Category: <%= params[:category].humanize %></li>
   <% end %>
 

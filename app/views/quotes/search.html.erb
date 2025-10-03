@@ -20,22 +20,20 @@
       <div data-autocomplete-target="results" class="autocomplete-results"></div>
     </div><br>
 
-</div>
+    <div>
+      <%= form.label :category, "Quotes type (クォーツの種類)", class: "checkboxItem"%><br>
+      <br>
+      <% Quote.categories.each_key do |category| %>
+        <div class="checkboxItem">
+          <%= check_box_tag "categories[]", category, class: "form-check-input", id: "category_#{category}" %>
+          <label for="category_#{category}" data-tooltip="<%= category == 'historical' ? '歴史上の偉人' : category == 'celebrity' ? '現代の著名人' : category == 'fictional' ? '作品に登場するキャラクター' : 'あなた自身 もしくは身近な人' %>">
+            <%= category.humanize %>
+          </label>
+        </div>
+      <% end %>
+    </div><br>
 
-  <div class="quote-form">
-    <%= form.label :category, "Quotes type (クォーツの種類)"%><br>
-    <br>
-    <% Quote.categories.each_key do |category| %>
-      <%= form.radio_button :category, category, id: "category_#{category}" %>
-      <label for="category_<%= category %>" data-tooltip="<%= category == 'historical' ? '歴史上の偉人' : category == 'celebrity' ? '現代の著名人' : category == 'fictional' ? '作品に登場するキャラクター' : 'あなた自身 もしくは身近な人' %>">
-        <%= category.humanize %>
-      </label>
-    <% end %>
-  </div><br>
-
-<div class="quote-search">
-
-  <div>
+  <div class="search-item">
     <%= form.label :note, class: "search-item" %>
     <%= form.text_field :note, class: "text-field", placeholder: "紹介内容で検索" %>
   </div><br>

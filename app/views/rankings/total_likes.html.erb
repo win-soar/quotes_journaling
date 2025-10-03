@@ -1,4 +1,7 @@
-<h2>通算いいねランキング</h2>
+<div class="ranking-title">
+  <h2>👑通算いいねランキング👑</h2>
+  <p>通算のいいね数順に表示されます。</p>
+</div>
 
 <% @ranking.each do |like| %>
   <% quote = Quote.find(like.quote_id) %>

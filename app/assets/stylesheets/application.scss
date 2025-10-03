@@ -505,14 +505,22 @@ label[for^="category_"] {
   margin-left: 30px;
   margin-right: 30px;
   font-size: 1.2rem;
+
+  .checkboxItem {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 10px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .checkboxItem:not(:last-of-type) {
+    margin-right: 16px;
+  }
 }
 
 .search-item {
   margin-right: 20px;
-}
-
-.search-item-quote-type {
-  margin-bottom: 10px;
 }
 
 .search-header {
@@ -531,4 +539,40 @@ label[for^="category_"] {
   border-radius: 10px;
   padding: 10px;
   border: 1px solid #ccc;
+}
+
+// ランキング用
+
+.ranking-title {
+  text-align: center;
+}
+
+// ユーザーページ用
+
+.user-infomation {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  margin-right: 30px;
+
+  .user-name {
+    margin-left: 20px;
+  }
+
+  .user-action {
+    align-items: flex-end;
+    margin-left: auto;
+    margin-right: 200px;
+  }
+}
+
+.user-bio {
+  margin: 30px;
+}
+
+// プロフィール編集画面用
+
+.user-edit {
+  margin-left: 30px;
+  margin-right: 30px;
 }

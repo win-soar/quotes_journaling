@@ -11,7 +11,7 @@
     <div>
       <%= form.label :category, 'Quotes type (クォーツの種類)*' %><br>
       <% Quote.categories.each do |key, value| %>
-        <%= form.radio_button :category, key, id: "category_#{key}", checked: (key == 'historical') %>
+        <%= form.radio_button :category, key, id: "category_#{key}", checked: (@quote.category.present? ? @quote.category == key : key == "historical") %>
         <label for="category_<%= key %>" data-tooltip="<%= key == 'historical' ? '歴史上の偉人' : key == 'celebrity' ? '現代の著名人' : key == 'fictional' ? '作品に登場するキャラクター' : 'あなた自身 もしくは身近な人' %>">
           <%= key.humanize %>
         </label>

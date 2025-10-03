@@ -1,23 +1,31 @@
-<div class="user-avatar">
+<div class="user-infomation">
   <%= avatar_image_tag(@user, size: "100x100") %>
-  <h2><%= @user.name %></h2>
+  <h2 class="user-name"><%= @user.name %></h2>
+
+  <div class="user-action">
+    <% if @user == current_user %>
+      <div class="dropdown">
+        <button class="btn btn-success btn-lg dropdown-toggle" type="button" id="userActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="userActionsDropdown">
+          <li><%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'dropdown-item' %></li>
+          <li><%= link_to 'いいねした投稿', user_likes_path(@user), class: 'dropdown-item' %></li>
+          <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'dropdown-item' %></li>
+          <% if current_user.line_user_id %>
+            <li><%= button_to "LINEアカウントと連携解除", unlink_line_account_path, method: :delete, class: "dropdown-item", data: { confirm: "本当に連携を解除しますか？" } %></li>
+          <% else %>
+            <li><%= link_to "LINEアカウントと連携", user_line_omniauth_authorize_path, class: "dropdown-item" %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<p><%= @user.bio.presence || 'まだ自己紹介がありません' %></p>
-
-<% if @user == current_user %>
-  <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'btn btn-primary' %>
-  <%= link_to 'いいねした投稿', user_likes_path(@user), class: 'btn btn-outline-danger' %>
-  <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'btn btn-danger' %>
-  <% if current_user.line_user_id %>
-    <%= button_to "LINEアカウントと連携解除", unlink_line_account_path,
-      method: :delete,
-      class: "btn btn-success",
-      data: { confirm: "本当に連携を解除しますか？" } %>
-  <% else %>
-    <%= link_to "LINEアカウントと連携", user_line_omniauth_authorize_path, class: "btn btn-success" %>
-  <% end %>
-<% end %>
+<p class="user-bio">
+  <%= @user.bio.presence || 'まだ自己紹介がありません' %>
+</p>
 
 <h4>過去のクォーツ</h4>
 
