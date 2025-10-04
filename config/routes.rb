@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get '/autocomplete', to: 'autocomplete#index'
 
   # 一般ユーザー関連
-  resources :users, only: [:new, :create, :show, :edit, :update]
+  resources :users, only: [:new, :create, :show, :edit, :update, :registration]
 
   # 投稿（名言）関連
   resources :quotes, only: [:new, :index, :create, :show, :destroy, :edit, :update] do

@@ -39,6 +39,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def registration
+    @user = current_user
+    @user.destroy
+    redirect_to root_path, notice: 'アカウントを削除しました。'
+  end
+
   def unlink_line_account
     current_user.update(line_user_id: nil, line_display_name: nil)
     redirect_back fallback_location: root_path, notice: 'LINE連携を解除しました'
