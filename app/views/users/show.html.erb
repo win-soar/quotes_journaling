@@ -11,12 +11,13 @@
         <ul class="dropdown-menu" aria-labelledby="userActionsDropdown">
           <li><%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'dropdown-item' %></li>
           <li><%= link_to 'いいねした投稿', user_likes_path(@user), class: 'dropdown-item' %></li>
-          <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class: 'dropdown-item' %></li>
+          <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: 'ログアウトしますか？' }, class: 'dropdown-item' %></li>
           <% if current_user.line_user_id %>
-            <li><%= button_to "LINEアカウントと連携解除", unlink_line_account_path, method: :delete, class: "dropdown-item", data: { confirm: "本当に連携を解除しますか？" } %></li>
+            <li><%= button_to "LINEアカウントと連携解除", unlink_line_account_path, method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当に連携を解除しますか？' }, class: "dropdown-item text-line" %></li>
           <% else %>
-            <li><%= link_to "LINEアカウントと連携", user_line_omniauth_authorize_path, class: "dropdown-item" %></li>
+            <li><%= link_to "LINEアカウントと連携", user_line_omniauth_authorize_path, class: "dropdown-item text-line" %></li>
           <% end %>
+          <li><%= link_to 'アカウントを削除', user_registration_path(@user), data: { turbo_method: :delete, turbo_confirm: 'アカウントを削除しますか？' }, class: 'dropdown-item text-danger' %></li>
         </ul>
       </div>
     <% end %>

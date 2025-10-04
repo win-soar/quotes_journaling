@@ -576,3 +576,21 @@ label[for^="category_"] {
   margin-left: 30px;
   margin-right: 30px;
 }
+
+.dropdown-item.text-line {
+  color: #070707 !important;
+  background-color: #bbfcb9 !important;
+}
+
+.dropdown-item.text-line:hover {
+  background-color: #a6e6b9 !important;
+}
+
+.dropdown-item.text-danger {
+  color: #dc3545 !important;
+  background-color: #e9d2d4 !important;
+}
+
+.dropdown-item.text-danger:hover {
+  background-color: #e6b9bc !important;
+}

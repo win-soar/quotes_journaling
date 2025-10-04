@@ -15,9 +15,9 @@ class LineWebhookController < ApplicationController
       begin
         request_body = request.body.read
         signature = request.env['HTTP_X_LINE_SIGNATURE']
-        
+
         events = parser.parse(body: request_body, signature: signature)
-        
+
         events.each do |event|
           begin
             LineEvent.create!(
@@ -30,7 +30,7 @@ class LineWebhookController < ApplicationController
             Rails.logger.error "[LINE Webhook] LineEvent保存失敗: #{e.message}"
           end
         end
-        
+
         head :ok
       rescue Line::Bot::V2::WebhookParser::InvalidSignatureError
         head :bad_request
