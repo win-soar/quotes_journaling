@@ -7,6 +7,6 @@
   <p class="text small"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></p>
 
   <% if comment.user != current_user %>
-    <%= link_to '通報', new_comment_report_path(comment), class: 'btn btn-warning btn-sm' %>
+    <%= link_to '通報', new_quote_comment_report_path(quote_id: comment.quote_id, comment_id: comment.id), class: 'btn btn-warning btn-sm' %>
   <% end %>
 </div>

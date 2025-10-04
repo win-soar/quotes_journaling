@@ -23,10 +23,10 @@ class ReportsController < ApplicationController
   end
 
   def find_reportable
-    if params[:quote_id]
-      Quote.find(params[:quote_id])
-    elsif params[:comment_id]
+    if params[:comment_id]
       Comment.find(params[:comment_id])
+    elsif params[:quote_id]
+      Quote.find(params[:quote_id])
     else
       raise ActiveRecord::RecordNotFound
     end

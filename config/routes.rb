@@ -48,11 +48,11 @@ Rails.application.routes.draw do
     resources :likes, only: [:create, :destroy]
     resources :reports, only: [:new, :create], defaults: { reportable: 'Quote' }
     resources :comments, only: [:create]
-  end
 
-  # コメント通報用
-  resources :comments, only: [] do
-    resources :reports, only: [:new, :create], defaults: { reportable: 'Comment' }
+    # コメント通報用
+    resources :comments, only: [] do
+      resources :reports, only: [:new, :create], defaults: { reportable: 'Comment' }
+    end
   end
 
   # ユーザーがいいねした投稿一覧
