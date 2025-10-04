@@ -1,14 +1,23 @@
-<h2>投稿を通報する</h2>
+<div class="report-form">
 
-<%= render 'shared/error_messages', object: @report %>
+  <h2>投稿を通報する</h2><br>
 
-<%= form_with(model: [@reportable, @report], local: true) do |f| %>
-  <div class="mb-3">
-    <%= f.label :reason, '通報する理由について記載してください。' %><br>
-    <%= f.text_area :reason, rows: 5, cols:50, class: "form-contorl" %>
-  </div>
+  <%= render 'shared/error_messages', object: @report %>
 
-  <%= f.submit '送信', class: "btn btn-warning" %>
-<% end %>
+  <%= form_with(model: @report,
+              url: @reportable.is_a?(Comment) ?
+                   quote_comment_reports_path(quote_id: @reportable.quote_id, comment_id: @reportable.id) :
+                   quote_reports_path(quote_id: @reportable.id),
+              local: true) do |f| %>
+    <div class="mb-3">
+      <%= f.label :reason, '通報する理由について記載してください。' %><br>
+      <%= f.text_area :reason, rows: 5, cols: 50, class: "form-control" %>
+    </div>
+    <br>
 
-<%= link_to "戻る", @reportable, class: "btn btn-secondary mt-3" %>
+    <%= f.submit '送信', class: "btn btn-warning" %>
+  <% end %>
+
+  <%= link_to "戻る", @reportable.is_a?(Comment) ? quote_path(@reportable.quote_id) : quote_path(@reportable), class: "btn btn-secondary mt-3" %>
+
+</div>
