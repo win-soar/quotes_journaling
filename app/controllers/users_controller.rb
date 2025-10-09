@@ -7,15 +7,14 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    saved = @user.save
-
-    unless params[:agree_terms] == "1"
-      @user.errors.add(:base, "利用規約・プライバシーポリシーへの同意が必要です。")
+    unless params[:user][:agree_terms] == "1"
+      @user.errors.add(:agree_terms, "利用規約・プライバシーポリシーへの同意が必要です。")
     end
 
     if @user.errors.any?
       render :new, status: :unprocessable_entity
     else
+      @user.save
       auto_login(@user)
       redirect_to root_path, notice: "アカウントを作成しました。"
     end
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def registration
+  def destroy
     @user = current_user
     @user.destroy
     redirect_to root_path, notice: 'アカウントを削除しました。'
@@ -53,6 +52,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio, :avatar)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :bio, :avatar, :agree_terms)
   end
 end

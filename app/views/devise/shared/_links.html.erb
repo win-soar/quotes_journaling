@@ -1,23 +1,28 @@
-<%- if controller_name != 'sessions' %>
-  <%= link_to "ログイン", new_session_path(resource_name) %><br />
-<% end %>
+<div class="login-option">
 
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "アカウントをお持ちでない場合  新規登録", new_registration_path(resource_name) %><br />
-<% end %>
+  <%- if devise_mapping.registerable? && controller_name != 'destroys' %>
+    <%= link_to "アカウントをお持ちでない場合  新規登録", new_registration_path(resource_name) %><br />
+  <% end %>
 
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "パスワードをお忘れの場合", new_password_path(resource_name) %><br />
-<% end %>
+  <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <%= link_to "パスワードをお忘れの場合", new_password_path(resource_name) %><br />
+  <% end %>
+
+</div>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
   <%= link_to "確認メールを再送する場合は？", new_confirmation_path(resource_name) %><br />
 <% end %>
 
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "ロック解除メールを再送する場合は？", new_unlock_path(resource_name) %><br />
-<% end %>
+<%#- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+  <%#= link_to "ロック解除メールを再送する場合は？", new_unlock_path(resource_name) %><br />
+<%# end %>
 
 <%- if devise_mapping.omniauthable? %>
-  <%= button_to "Googleでログイン", user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false } %>
+  <div class="login-with-google">
+    <p>Googleでログイン・アカウント作成</p>
+    <%= link_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false } do %>
+      <%= image_tag("google.png", alt: "Googleでログイン") %>
+    <% end %>
+  </div>
 <% end %>

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  attr_accessor :agree_terms
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[google_oauth2 line]
