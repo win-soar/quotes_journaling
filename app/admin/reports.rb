@@ -1,12 +1,6 @@
 ActiveAdmin.register Report do
   includes :user, :reportable
 
-  # 独自削除アクション
-  member_action :delete, method: :post do
-    resource.destroy
-    redirect_to admin_reports_path, notice: '通報を削除しました'
-  end
-
   index do
     selectable_column
     id_column
@@ -24,11 +18,7 @@ ActiveAdmin.register Report do
     end
     column :reason
     column :created_at
-    actions defaults: false do |report|
-      form_tag(delete_admin_report_path(report), method: :post, authenticity_token: true, style: "display: inline;") do
-        submit_tag('削除', data: { confirm: '本当に削除しますか？' }, style: 'margin-left: 8px;')
-      end
-    end
+    actions
   end
 
   show do

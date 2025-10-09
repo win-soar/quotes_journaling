@@ -7,4 +7,3 @@ window.jQuery = $;
 import "./controllers"
 import "bootstrap";
 import "@hotwired/turbo-rails";
-import "./active_admin"
