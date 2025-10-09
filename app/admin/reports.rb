@@ -25,7 +25,7 @@ ActiveAdmin.register Report do
     column :reason
     column :created_at
     actions defaults: false do |report|
-      form_tag(delete_admin_report_path(report), method: :post, style: "display: inline;") do
+      form_tag(delete_admin_report_path(report), method: :post, authenticity_token: true, style: "display: inline;") do
         submit_tag('削除', data: { confirm: '本当に削除しますか？' }, style: 'margin-left: 8px;')
       end
     end
