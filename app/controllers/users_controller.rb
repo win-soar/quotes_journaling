@@ -7,8 +7,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    unless params[:user][:agree_terms] == "1"
-      @user.errors.add(:agree_terms, "利用規約・プライバシーポリシーへの同意が必要です。")
+    @user.save
+
+    unless params[:agree_terms] == "1"
+      @user.errors.add(:base, "利用規約・プライバシーポリシーへの同意が必要です。")
     end
 
     if @user.errors.any?
