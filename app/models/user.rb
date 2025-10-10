@@ -16,9 +16,20 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
   validates :password_confirmation, presence: true, if: :password_required?
   validate :avatar_type
+  validate :agree_terms_checked, on: :create
+
+
 
   def liked?(quote)
     likes.exists?(quote_id: quote.id)
+  end
+
+  private
+
+  def agree_terms_checked
+    if agree_terms != "1"
+      errors.add(:base, "利用規約とプライバシーポリシーへの同意が必要です。")
+    end
   end
 
   def self.ransackable_attributes(auth_object = nil)
