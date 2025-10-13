@@ -668,16 +668,3 @@ label[for^="category_"] {
   text-decoration: underline;
   margin-bottom: 30px;
 }
-
-// パスワード再設定用
-
-.password-reset-form {
-  margin: 30px;
-
-  .form-control {
-    width: 75vw;
-    flex: auto;
-    border-radius: 10px;
-    padding: 10px;
-  }
-}
