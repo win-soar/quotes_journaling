@@ -76,6 +76,18 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { host: 'quotes-journaling.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.office365.com',
+    port: 587,
+    domain: 'outlook.com',
+    user_name: 'quotesjournaling@outlook.jp',
+    password: 'sgYiRab9Bzd!bgT',
+    authentication: :login,
+    enable_starttls_auto: true
+  }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
