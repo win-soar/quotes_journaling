@@ -79,12 +79,12 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'quotes-journaling.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.office365.com',
+    address: 'smtp.gmail.com',
     port: 587,
-    domain: 'outlook.com',
+    domain: 'gmail.com',
     user_name: ENV['RESET_MAILER_ADDRESS'],
     password: ENV['RESET_MAILER_PASSWORD'],
-    authentication: :login,
+    authentication: :plain,
     enable_starttls_auto: true
   }
 
