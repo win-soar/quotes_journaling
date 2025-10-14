@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @user.name %>様</h1>
+    <p>
+      パスワードの再設定を行います。
+      以下のリンクをクリックして、新しいパスワードを設定してください。
+    </p>
+    <p>
+      <%= @url %>
+    </p>
+    <p>
+      本メールは、パスワードの再設定のための自動送信メールです。
+      ご返信いただいても、パスワードの再設定は行われません。
+    </p>
+  </body>
+</html>

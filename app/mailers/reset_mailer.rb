@@ -5,9 +5,8 @@ class ResetMailer < ApplicationMailer
   #
   #   en.reset_mailer.send_when_passreset.subject
   #
-  def send_when_passreset
-    @greeting = "Hi"
-
-    mail to: "to@example.org"
+  def send_when_passreset(email, name)
+    @name = name
+    mail to: email, subject: "パスワードの再設定"
   end
 end

@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }, path_names: {
-    line_omniauth_authorize: 'auth/line'
+    line_omniauth_authorize: 'auth/line',
+    passwords: 'users/passwords'
   }
 
   delete '/unlink_line_account', to: 'users#unlink_line_account', as: :unlink_line_account
