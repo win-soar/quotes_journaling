@@ -50,8 +50,8 @@ Rails.application.configure do
     address: 'smtp.office365.com',
     port: 587,
     domain: 'outlook.com',
-    user_name: 'ENV['WELCOME_MAILER_ADDRESS']',
-    password: 'ENV['WELCOME_MAILER_PASSWORD']',
+    user_name: ENV['RESET_MAILER_ADDRESS'],
+    password: ENV['RESET_MAILER_PASSWORD'],
     authentication: :login,
     enable_starttls_auto: true
   }
