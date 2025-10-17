@@ -74,6 +74,9 @@ Rails.application.configure do
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "quotes_journaling_production"
 
+
+  config.action_mailer.raise_delivery_errors = true
+
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = { host: 'quotes-journaling.com' }
@@ -82,13 +85,11 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     domain: 'gmail.com',
-    user_name: ENV['RESET_MAILER_ADDRESS'],
-    password: ENV['RESET_MAILER_PASSWORD'],
+    user_name: ENV['MAILER_SMTP_USER_NAME'],
+    password: ENV['MAILER_SMTP_PASSWORD'],
     authentication: :plain,
     enable_starttls_auto: true
   }
-
-  config.action_mailer.raise_delivery_errors = true
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
