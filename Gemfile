@@ -94,3 +94,6 @@ group :test do
 end
 
 gem "jsbundling-rails", "~> 1.3"
+
+gem 'sendgrid-ruby'
+gem 'sendgrid-actionmailer', '~> 3.2.0'
