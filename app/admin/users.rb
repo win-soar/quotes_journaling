@@ -24,6 +24,20 @@ ActiveAdmin.register User do
     end
   end
 
+  member_action :send_recommendation, method: :post do
+    if resource.line_user_id.present?
+      quote = DailyPostRecommendation.find_recommended_quote
+      if quote
+        DailyPostRecommendation.send_recommendation(resource, quote)
+        redirect_to admin_users_path, notice: "おすすめ投稿を送信しました (user_id: #{resource.line_user_id})"
+      else
+        redirect_to admin_users_path, alert: "おすすめ投稿が見つかりませんでした"
+      end
+    else
+      redirect_to admin_users_path, alert: 'このユーザーはLINE連携されていません。'
+    end
+  end
+
   remove_filter :liked_quotes, :avatar_attachment, :avatar_blob, :provider
   index do
     selectable_column
@@ -34,6 +48,7 @@ ActiveAdmin.register User do
     actions defaults: true do |user|
       if user.line_user_id.present?
         link_to 'LINEテスト送信', send_test_message_admin_user_path(user), method: :post, data: { confirm: 'このユーザーにLINEテストメッセージを送信します。よろしいですか？' }
+        link_to 'おすすめ投稿送信', send_recommendation_admin_user_path(user), method: :post, data: { confirm: 'このユーザーにおすすめ投稿を送信します。よろしいですか？' }
       end
     end
   end
