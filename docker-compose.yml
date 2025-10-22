@@ -13,6 +13,7 @@ services:
     environment:
       - RAILS_ENV=development
       - WEB_CONCURRENCY=1
+      - TZ=Asia/Tokyo
     env_file:
       - .env.development
     stdin_open: true
