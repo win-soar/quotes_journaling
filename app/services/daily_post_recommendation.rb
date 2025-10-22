@@ -10,10 +10,9 @@ class DailyPostRecommendation
   end
 
   def self.send_test_message_to_user(user_id)
-    message = {
-      type: 'text',
+    message = Line::Bot::V2::MessagingApi::TextMessage.new(
       text: "9/#{Date.today.day}(#{I18n.t('date.abbr_day_names')[Date.today.wday]}) 本日のおすすめクォーツ🌟\n\nテストメッセージです"
-    }
+    )
 
     begin
       LineClientService.messaging_api_client.push_message(
@@ -38,8 +37,7 @@ class DailyPostRecommendation
 
   def self.send_recommendation(user, quote)
     date_str = Date.current.strftime("%-m/%-d(%a)")
-    message = {
-      type: 'text',
+    message = Line::Bot::V2::MessagingApi::TextMessage.new(
       text: <<~MESSAGE
         #{date_str} 本日のおすすめクォーツ🌟
 
@@ -50,16 +48,21 @@ class DailyPostRecommendation
 
         サイトで見る: #{Rails.application.routes.url_helpers.quote_url(quote)}
       MESSAGE
-    }
+    )
+
+    request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
+      to: user.line_user_id,
+      messages: [message]
+    )
 
     begin
       LineClientService.messaging_api_client.push_message(
-        to: user.line_user_id,
-        messages: [message]
+        push_message_request: request
       )
     rescue => e
       Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
       raise
     end
   end
+
 end
