@@ -27,14 +27,14 @@ ActiveAdmin.register User do
   member_action :send_recommendation, method: :post do
     if resource.line_user_id.present?
       quote = DailyPostRecommendation.find_recommended_quote
-      if quote
-        DailyPostRecommendation.send_recommendation(resource, quote)
-        redirect_to admin_users_path, notice: "おすすめ投稿を送信しました (user_id: #{resource.line_user_id})"
-      else
-        redirect_to admin_users_path, alert: "おすすめ投稿が見つかりませんでした"
-      end
+        if quote
+          DailyPostRecommendation.send_recommendation(resource, quote)
+          redirect_to admin_users_path, notice: "おすすめ投稿を送信しました (user_id: #{resource.line_user_id})"
+        else
+          redirect_to admin_users_path, alert: "おすすめ投稿が見つかりませんでした"
+        end
     else
-      redirect_to admin_users_path, alert: 'このユーザーはLINE連携されていません。'
+        redirect_to admin_users_path, alert: 'このユーザーはLINE連携されていません。'
     end
   end
 
@@ -47,8 +47,15 @@ ActiveAdmin.register User do
     column :created_at
     actions defaults: true do |user|
       if user.line_user_id.present?
-        link_to 'LINEテスト送信', send_test_message_admin_user_path(user), method: :post, data: { confirm: 'このユーザーにLINEテストメッセージを送信します。よろしいですか？' }
-        link_to 'おすすめ投稿送信', send_recommendation_admin_user_path(user), method: :post, data: { confirm: 'このユーザーにおすすめ投稿を送信します。よろしいですか？' }
+        [
+          link_to('LINEテスト送信', send_test_message_admin_user_path(user),
+                method: :post,
+                data: { confirm: 'このユーザーにLINEテストメッセージを送信します。よろしいですか？' }),
+          link_to('おすすめ送信', send_recommendation_admin_user_path(user),
+                method: :post,
+                data: { confirm: 'このユーザーにおすすめ投稿を送信します。よろしいですか？' },
+                class: 'member_link')
+        ].join(' ').html_safe
       end
     end
   end

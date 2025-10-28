@@ -6,6 +6,7 @@ class DailyPostRecommendation
     User.with_line_account.find_each do |user|
       send_recommendation(user, quote)
       puts "おすすめ名言を送信しました: #{user.line_user_id}"
+      Rails.logger.info "おすすめ名言を送信しました: #{user.line_user_id}"
     end
   end
 
@@ -42,9 +43,9 @@ class DailyPostRecommendation
         #{date_str} 本日のおすすめクォーツ🌟
 
         "#{quote.title}"
-        "#{quote.author}"
+        - #{quote.author}
 
-        "#{quote.user.name} さんの投稿"
+        #{quote.user.name} さんの投稿
 
         サイトで見る: #{Rails.application.routes.url_helpers.quote_url(quote)}
       MESSAGE

@@ -8,7 +8,7 @@ set :output, "log/cron.log"
 require_relative '../app/services/daily_post_recommendation'
 
 every 1.day, at: '8:00 pm' do
-  runner "DailyPostRecommendation.send_daily_recommendations"
+  runner "DailyPostRecommendation.send_daily_recommendations", output: 'log/cron.log'
 end
 
 # every 2.hours do
