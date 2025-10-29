@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   # 静的ページ
   get 'terms', to: 'static_pages#terms', as: :terms
   get 'privacy_policy', to: 'static_pages#privacy_policy', as: :privacy_policy
+  get 'guide', to: 'static_pages#guide', as: :guide
 
   # ヘルスチェック
   get 'health_check', to: 'home#health_check'

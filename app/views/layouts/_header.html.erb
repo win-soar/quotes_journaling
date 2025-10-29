@@ -2,6 +2,9 @@
   <h1><%= link_to 'Quotes Journaling', root_path %></h1><br>
   <% if user_signed_in? %>
     <div class="header-menu">
+      <%= link_to guide_path do %>
+        <%= image_tag("question.png", alt: "ガイド", class: "search-icon") %>
+      <% end %>
       <%= link_to search_quotes_path do %>
         <%= image_tag("search.png", alt: "検索", class: "search-icon") %>
       <% end %>
