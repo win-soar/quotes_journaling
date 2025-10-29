@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     root 'home#index', as: :unauthenticated_root
   end
 
+  # 外部cron実行用
+  get '/scheduler/run_daily', to: 'scheduler#run_daily'
+
   # LINE Webhook
   post '/callback', to: 'line_webhook#callback'
 
