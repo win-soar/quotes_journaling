@@ -16,17 +16,19 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
   validates :password_confirmation, presence: true, if: :password_required?
   validate :avatar_type
-  validate :agree_terms_checked, on: :create
-
-
+  validate :terms_agreement_required, on: :create, unless: :google_authenicated?
 
   def liked?(quote)
     likes.exists?(quote_id: quote.id)
   end
 
+  def google_authenicated?
+    provider == "google_oauth2"
+  end
+
   private
 
-  def agree_terms_checked
+  def terms_agreement_required
     if agree_terms != "1"
       errors.add(:base, "利用規約とプライバシーポリシーへの同意が必要です。")
     end

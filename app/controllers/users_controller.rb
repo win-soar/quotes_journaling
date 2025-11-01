@@ -5,22 +5,20 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create
-    @user = User.new(user_params)
-    @user.save
+def create
+  @user = User.new(user_params)
 
-    unless params[:agree_terms] == "1"
-      @user.errors.add(:base, "利用規約・プライバシーポリシーへの同意が必要です。")
-    end
-
-    if @user.errors.any?
-      render :new, status: :unprocessable_entity
-    else
-      @user.save
-      auto_login(@user)
-      redirect_to root_path, notice: "アカウントを作成しました。"
-    end
+  unless @user.google_authenicated? || params[:agree_terms] == "1"
+    @user.errors.add(:base, "利用規約・プライバシーポリシーへの同意が必要です。")
   end
+
+  if @user.errors.empty? && @user.save
+    auto_login(@user)
+    redirect_to root_path, notice: "アカウントを作成しました。"
+  else
+    render :new, status: :unprocessable_entity
+  end
+end
 
   def show
     @user = User.find(params[:id])
