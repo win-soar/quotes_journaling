@@ -16,7 +16,7 @@ ActiveAdmin.register User do
         )
 
         redirect_to admin_users_path, notice: "LINEテストメッセージを送信しました (user_id: #{resource.line_user_id})"
-      rescue => e
+      rescue StandardError => e
         redirect_to admin_users_path, alert: "LINEメッセージ送信に失敗しました: #{e.message}"
       end
     else
@@ -27,14 +27,14 @@ ActiveAdmin.register User do
   member_action :send_recommendation, method: :post do
     if resource.line_user_id.present?
       quote = DailyPostRecommendation.find_recommended_quote
-        if quote
-          DailyPostRecommendation.send_recommendation(resource, quote)
-          redirect_to admin_users_path, notice: "おすすめ投稿を送信しました (user_id: #{resource.line_user_id})"
-        else
-          redirect_to admin_users_path, alert: "おすすめ投稿が見つかりませんでした"
-        end
+      if quote
+        DailyPostRecommendation.send_recommendation(resource, quote)
+        redirect_to admin_users_path, notice: "おすすめ投稿を送信しました (user_id: #{resource.line_user_id})"
+      else
+        redirect_to admin_users_path, alert: "おすすめ投稿が見つかりませんでした"
+      end
     else
-        redirect_to admin_users_path, alert: 'このユーザーはLINE連携されていません。'
+      redirect_to admin_users_path, alert: 'このユーザーはLINE連携されていません。'
     end
   end
 
@@ -47,15 +47,15 @@ ActiveAdmin.register User do
     column :created_at
     actions defaults: true do |user|
       if user.line_user_id.present?
-        [
-          link_to('LINEテスト送信', send_test_message_admin_user_path(user),
-                method: :post,
-                data: { confirm: 'このユーザーにLINEテストメッセージを送信します。よろしいですか？' }),
-          link_to('おすすめ送信', send_recommendation_admin_user_path(user),
-                method: :post,
-                data: { confirm: 'このユーザーにおすすめ投稿を送信します。よろしいですか？' },
-                class: 'member_link')
-        ].join(' ').html_safe
+        safe_join([
+                    link_to('LINEテスト送信', send_test_message_admin_user_path(user),
+                            method: :post,
+                            data: { confirm: 'このユーザーにLINEテストメッセージを送信します。よろしいですか？' }),
+                    link_to('おすすめ送信', send_recommendation_admin_user_path(user),
+                            method: :post,
+                            data: { confirm: 'このユーザーにおすすめ投稿を送信します。よろしいですか？' },
+                            class: 'member_link')
+                  ], ' ')
       end
     end
   end

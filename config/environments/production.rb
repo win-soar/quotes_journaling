@@ -74,7 +74,6 @@ Rails.application.configure do
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "quotes_journaling_production"
 
-
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
