@@ -18,7 +18,7 @@ class LineTestController < ApplicationController
         push_message_request: request
       )
       render plain: "テストメッセージを送信しました: #{user_id}"
-    rescue => e
+    rescue StandardError => e
       logger.error "LINEメッセージ送信エラー: #{e.message}"
       render plain: "メッセージ送信に失敗しました", status: :internal_server_error
     end

@@ -5,14 +5,14 @@ class DailyPostRecommendation
 
     User.with_line_account.find_each do |user|
       send_recommendation(user, quote)
-      puts "おすすめ名言を送信しました: #{user.line_user_id}"
+      Rails.logger.debug "おすすめ名言を送信しました: #{user.line_user_id}"
       Rails.logger.info "おすすめ名言を送信しました: #{user.line_user_id}"
     end
   end
 
   def self.send_test_message_to_user(user_id)
     message = Line::Bot::V2::MessagingApi::TextMessage.new(
-      text: "9/#{Date.today.day}(#{I18n.t('date.abbr_day_names')[Date.today.wday]}) 本日のおすすめクォーツ🌟\n\nテストメッセージです"
+      text: "9/#{Time.zone.today.day}(#{I18n.t('date.abbr_day_names')[Time.zone.today.wday]}) 本日のおすすめクォーツ🌟\n\nテストメッセージです"
     )
 
     begin
@@ -21,7 +21,7 @@ class DailyPostRecommendation
         messages: [message]
       )
       Rails.logger.info "テストメッセージを送信しました: #{user_id}"
-    rescue => e
+    rescue StandardError => e
       Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
       raise
     end
@@ -60,10 +60,9 @@ class DailyPostRecommendation
       LineClientService.messaging_api_client.push_message(
         push_message_request: request
       )
-    rescue => e
+    rescue StandardError => e
       Rails.logger.error "LINEメッセージ送信エラー: #{e.message}"
       raise
     end
   end
-
 end

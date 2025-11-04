@@ -19,16 +19,14 @@ class LineWebhookController < ApplicationController
         events = parser.parse(body: request_body, signature: signature)
 
         events.each do |event|
-          begin
-            LineEvent.create!(
-              event_type: event.type,
-              user_id: event.dig('source', 'userId'),
-              payload: event.to_h
-            )
-            Rails.logger.info "[LINE Webhook] LineEventを保存しました: user_id=#{event.dig('source', 'userId')}, event_type=#{event.type}"
-          rescue ActiveRecord::RecordInvalid => e
-            Rails.logger.error "[LINE Webhook] LineEvent保存失敗: #{e.message}"
-          end
+          LineEvent.create!(
+            event_type: event.type,
+            user_id: event.dig('source', 'userId'),
+            payload: event.to_h
+          )
+          Rails.logger.info "[LINE Webhook] LineEventを保存しました: user_id=#{event.dig('source', 'userId')}, event_type=#{event.type}"
+        rescue ActiveRecord::RecordInvalid => e
+          Rails.logger.error "[LINE Webhook] LineEvent保存失敗: #{e.message}"
         end
 
         head :ok

@@ -1,7 +1,7 @@
 class LineNotification
   class << self
     def send_test_message(user_id, message_text = "テストメッセージです")
-      body = {
+      {
         to: user_id,
         messages: [
           {

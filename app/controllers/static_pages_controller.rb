@@ -1,5 +1,9 @@
 class StaticPagesController < ApplicationController
-  skip_before_action :authenticate_user!, raise: false rescue nil
+  begin
+    skip_before_action :authenticate_user!, raise: false
+  rescue StandardError
+    nil
+  end
 
   def terms
   end

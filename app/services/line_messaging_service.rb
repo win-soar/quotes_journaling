@@ -10,7 +10,7 @@ class LineMessagingService
       ]
     }
 
-    puts "push_message args: #{ { channel_access_token: LineClientService.channel_token, body: body }.inspect }"
+    Rails.logger.debug "push_message args: #{{ channel_access_token: LineClientService.channel_token, body: body }.inspect}"
 
     LineClientService.messaging_api_client.push_message(
       channel_access_token: LineClientService.channel_token,
