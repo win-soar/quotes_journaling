@@ -16,6 +16,11 @@
 
   <div class="quote-footer">
     <%= render partial: "likes/like_button", locals: { quote: quote } %>
+
+    <%= link_to "https://x.com/share?url=#{quote_url(quote)}/&text=【Quotes%20Journalingでの名言】%0a#{quote.user.name}%20さんの投稿%0a%0a\"#{quote.title}\"%0a%20-%20#{quote.author}%0a%0a", target: "_blank" do %>
+      <% image_tag("twitter.png", alt: "X", class: "x-share-icon") %>
+    <% end %>
+
     <%= quote.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M") %>
   </div>
 </div>
