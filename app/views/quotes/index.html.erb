@@ -3,3 +3,5 @@
 <% end %>
 
 <%= render partial: 'quotes/quote', collection: @quotes, as: :quote %>
+
+<%= paginate @quotes %>

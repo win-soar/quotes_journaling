@@ -4,7 +4,7 @@ class QuotesController < ApplicationController
   end
 
   def index
-    @quotes = Quote.includes(:user).order(created_at: :desc)
+    @quotes = Quote.includes(:user).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def create

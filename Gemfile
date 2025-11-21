@@ -40,6 +40,8 @@ gem 'whenever', require: false
 gem 'foreman'
 gem 'thor'
 
+gem 'kaminari'
+
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 
