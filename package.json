@@ -11,7 +11,7 @@
     "start": "./bin/dev",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
   },
-  "packageManager": "yarn@4.10.3",
+  "packageManager": "yarn@4.12.0",
   "devDependencies": {
     "esbuild": "^0.25.10"
   }
