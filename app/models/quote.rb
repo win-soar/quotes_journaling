@@ -5,6 +5,9 @@ class Quote < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :reports, as: :reportable, dependent: :destroy
 
+  scope :global,    -> { joins(:user).where(users: { circle_id: nil }) }
+  scope :in_circle, ->(circle) { joins(:user).where(users: { circle_id: circle.id }) }
+
   validates :title, :author, :note, :category, presence: true
 
   enum category: {

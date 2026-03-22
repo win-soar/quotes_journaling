@@ -1,0 +1,7 @@
+<%= link_to new_circle_quote_path(current_circle), class: "fab" do %>
+  <%= image_tag("pencil.jpg", alt: "投稿", class: "fab-icon") %>
+<% end %>
+
+<%= render partial: 'circles/quotes/quote', collection: @quotes, as: :quote %>
+
+<%= paginate @quotes %>

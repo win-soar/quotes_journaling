@@ -1,0 +1,11 @@
+<h2>検索結果</h2>
+
+<% if @quotes.any? %>
+  <%= render partial: 'circles/quotes/quote', collection: @quotes, as: :quote %>
+<% else %>
+  <p>該当するクォーツが見つかりませんでした。</p>
+<% end %>
+
+<div class="return-button">
+  <%= link_to "検索に戻る", search_circle_quotes_path(current_circle), class: "btn btn-secondary" %>
+</div>

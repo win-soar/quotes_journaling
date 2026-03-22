@@ -2,8 +2,10 @@ class User < ApplicationRecord
   attr_accessor :agree_terms
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable,
          :omniauthable, omniauth_providers: %i[google_oauth2 line]
+
+  belongs_to :circle, optional: true
 
   has_many :quotes, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -12,12 +14,23 @@ class User < ApplicationRecord
   has_many :reports, dependent: :destroy
   has_one_attached :avatar
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, format: { with: Devise.email_regexp }
+  validates :email, uniqueness: true, if: :global_user?
+  validates :email, uniqueness: { scope: :circle_id }, if: :circle_user?
   validates :name, presence: true
-  validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
+  validates :password, length: { minimum: 6 }, allow_blank: true, if: :password_required?
   validates :password_confirmation, presence: true, if: :password_required?
   validate :avatar_type
-  validate :terms_agreement_required, on: :create, unless: :google_authenicated?
+  validate :terms_agreement_required, on: :create,
+           unless: -> { google_authenicated? || circle_user? }
+
+  def circle_user?
+    circle_id.present?
+  end
+
+  def global_user?
+    circle_id.nil?
+  end
 
   def liked?(quote)
     likes.exists?(quote_id: quote.id)

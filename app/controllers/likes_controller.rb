@@ -1,4 +1,5 @@
 class LikesController < ApplicationController
+  before_action :redirect_circle_user!, only: [:index]
   before_action :set_quote, except: [:index]
 
   def create
@@ -27,6 +28,10 @@ class LikesController < ApplicationController
   end
 
   private
+
+  def redirect_circle_user!
+    redirect_to circle_quotes_path(current_circle) if circle_mode?
+  end
 
   def set_quote
     @quote = Quote.find(params[:quote_id])
