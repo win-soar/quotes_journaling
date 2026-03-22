@@ -1,0 +1,65 @@
+<div class="quote-card mb-3 p-3 quote-category--<%= @quote.category.downcase.gsub(' ', '-') %>">
+  <h2><%= "\"#{@quote.title}\"" %></h2>
+</div>
+
+<div class="quote-of-user">
+  <%= avatar_image_tag(@quote.user, size: "75x75") %>
+  <h4><strong>投稿者:</strong><%= link_to @quote.user.name, user_path(@quote.user) %></h4>
+
+  <div class="quote-of-user-buttons">
+    <% if @quote.user == current_user %>
+      <%= link_to '投稿を編集', edit_circle_quote_path(current_circle, @quote), class: 'btn btn-success' %>
+    <% end %>
+
+    <% if @quote.user == current_user %>
+      <%= button_to '投稿を削除', circle_quote_path(current_circle, @quote), method: :delete, data: { confirm: 'このクォーツを削除しますか？' }, class: 'btn btn-danger' %>
+    <% end %>
+
+    <% if @quote.user != current_user %>
+      <%= link_to '通報', new_circle_quote_report_path(current_circle, @quote), class: 'btn btn-warning' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="quote-info">
+  <p><strong>Author of the Quotes:</strong> <%= @quote.author %></p>
+  <p><strong>Quotes type:</strong> <%= @quote.category %></p>
+  <% if @quote.source.present? %>
+    <p><strong>Source of the Quotes:</strong> <%= @quote.source %>（<%= @quote.source_writer %>）</p>
+  <% end %>
+  <p><strong>note:</strong><br><%= simple_format(@quote.note) %></p>
+</div>
+
+<hr>
+
+<%= render @comments %>
+
+<% if @comment.errors.any? %>
+  <div class="alert flash-message">
+    <ul>
+      <% @comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="comment-form">
+  <div class="user-avatar">
+    <%= avatar_image_tag(current_user) %>
+  </div>
+
+  <%= form_with(url: circle_quote_comments_path(current_circle, @quote), local: true) do |form| %>
+    <div>
+      <%= form.text_area :body, rows: 3, class: "form-control", placeholder: 'コメントを入力', name: "comment[body]" %>
+    </div>
+
+    <div>
+      <%= form.submit 'コメントする', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="return-button">
+  <%= link_to "戻る", circle_quotes_path(current_circle), class: "btn btn-secondary" %>
+</div>

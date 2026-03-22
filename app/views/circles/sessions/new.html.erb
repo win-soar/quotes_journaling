@@ -1,0 +1,26 @@
+<div class="login-page">
+  <h2><%= @circle.name %> にログイン</h2>
+
+  <% if flash[:alert] %>
+    <div class="flash-message alert"><%= flash[:alert] %></div>
+  <% end %>
+
+  <%= form_tag circle_join_login_path(join_token: @circle.join_token), method: :post, local: true do %>
+    <div>
+      <%= label_tag :email, 'メールアドレス' %><br>
+      <%= email_field_tag :email, nil, class: "form-control" %>
+    </div><br>
+
+    <div>
+      <%= label_tag :password, 'パスワード' %><br>
+      <%= password_field_tag :password, nil, class: "form-control" %>
+    </div><br>
+
+    <div>
+      <%= submit_tag 'ログイン', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <br>
+  <p>アカウントをお持ちでない方は <%= link_to 'こちらから新規登録', circle_join_signup_path(join_token: @circle.join_token) %></p>
+</div>

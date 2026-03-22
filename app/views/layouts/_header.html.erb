@@ -1,15 +1,24 @@
 <header class="header">
-  <h1><%= link_to 'Quotes Journaling', root_path %></h1><br>
+  <% if circle_mode? %>
+    <%= link_to circle_members_path(current_circle), class: "circle-info" do %>
+      <strong class="circle-name"><%= current_circle.name %></strong>
+      <span class="circle-member-count">メンバー <%= current_circle.member_count %>人</span>
+    <% end %>
+  <% else %>
+    <h1><%= link_to 'Quotes Journaling', root_path %></h1>
+  <% end %>
   <% if user_signed_in? %>
     <div class="header-menu">
-      <%= link_to guide_path do %>
-        <%= image_tag("question.png", alt: "ガイド", class: "search-icon") %>
+      <% unless circle_mode? %>
+        <%= link_to guide_path do %>
+          <%= image_tag("question.png", alt: "ガイド", class: "search-icon") %>
+        <% end %>
+        <%= link_to search_quotes_path do %>
+          <%= image_tag("search.png", alt: "検索", class: "search-icon") %>
+        <% end %>
+        <%= link_to '週間ランキング', weekly_likes_rankings_path %>
+        <%= link_to '通算ランキング', total_likes_rankings_path %>
       <% end %>
-      <%= link_to search_quotes_path do %>
-        <%= image_tag("search.png", alt: "検索", class: "search-icon") %>
-      <% end %>
-      <%= link_to '週間ランキング', weekly_likes_rankings_path %>
-      <%= link_to '通算ランキング', total_likes_rankings_path %>
       <%= link_to user_path(current_user) do %>
         <%= avatar_image_tag(current_user, size: "50x50") %>
       <% end %>

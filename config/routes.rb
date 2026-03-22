@@ -76,4 +76,28 @@ Rails.application.routes.draw do
 
   # ルート
   root 'quotes#index'
+
+  # サークル参加・ログイン（未ログイン用）
+  scope '/circles/:join_token', as: :circle_join do
+    get  'signup', to: 'circles/registrations#new',  as: '_signup'
+    post 'signup', to: 'circles/registrations#create'
+    get  'login',  to: 'circles/sessions#new',       as: '_login'
+    post 'login',  to: 'circles/sessions#create'
+  end
+
+  # サークル内リソース（ログイン後）
+  resources :circles, only: [] do
+    resources :members, only: [:index], controller: 'circles/members'
+    resources :quotes, controller: 'circles/quotes' do
+      resources :likes,    only: [:create, :destroy], controller: 'circles/likes'
+      resources :comments, only: [:create], controller: 'circles/comments' do
+        resources :reports, only: [:new, :create]
+      end
+      resources :reports, only: [:new, :create]
+      collection do
+        get :search
+        get :search_result
+      end
+    end
+  end
 end

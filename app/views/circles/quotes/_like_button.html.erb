@@ -1,0 +1,11 @@
+<div id="circle_like_button_<%= quote.id %>">
+  <% if current_user.liked?(quote) %>
+    <%= button_to circle_quote_like_path(current_circle, quote, quote.likes.find_by(user: current_user)), method: :delete, form: { data: { turbo_stream: true } } do %>
+      ❤️ <%= quote.likes.count %>
+    <% end %>
+  <% else %>
+    <%= button_to circle_quote_likes_path(current_circle, quote), method: :post, form: { data: { turbo_stream: true } } do %>
+      🤍 <%= quote.likes.count %>
+    <% end %>
+  <% end %>
+</div>
