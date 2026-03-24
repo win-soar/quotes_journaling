@@ -6,7 +6,8 @@ class Like < ApplicationRecord
 
   # 通算いいね数ランキング用スコープ
   scope :total_ranking, lambda { |limit = 30|
-    select('quote_id, count(*) as likes_count')
+    joins(quote: :user).where(users: { circle_id: nil })
+      .select('quote_id, count(*) as likes_count')
       .group(:quote_id)
       .order('likes_count DESC')
       .limit(limit)
@@ -14,7 +15,8 @@ class Like < ApplicationRecord
 
   # 週間いいね数ランキング用スコープ
   scope :weekly_ranking, lambda { |limit = 10|
-    where('created_at >= ?', 1.week.ago)
+    joins(quote: :user).where(users: { circle_id: nil })
+      .where('likes.created_at >= ?', 1.week.ago)
       .select('quote_id, count(*) as likes_count')
       .group(:quote_id)
       .order('likes_count DESC')
