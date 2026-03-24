@@ -4,10 +4,16 @@ module Users
 
     def google_oauth2
       auth = request.env["omniauth.auth"]
-      @user = User.from_omniauth(auth)
+
+      if (join_token = session.delete(:circle_join_token))
+        circle = Circle.find_by(join_token: join_token)
+        @user = circle ? User.from_omniauth_for_circle(auth, circle) : User.from_omniauth(auth)
+      else
+        @user = User.from_omniauth(auth)
+      end
 
       if @user.persisted?
-        sign_in_and_redirect @user, event: :authentication, to: root_path
+        sign_in_and_redirect @user, event: :authentication
         flash[:notice] = "Googleアカウントでログインしました。"
       else
         redirect_to root_path, alert: "認証に失敗しました: #{@user.errors.full_messages.join(', ')}"

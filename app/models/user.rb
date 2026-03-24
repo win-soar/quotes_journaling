@@ -50,7 +50,20 @@ class User < ApplicationRecord
     end
 
     def from_omniauth(auth)
-      user = where(provider: auth.provider, uid: auth.uid).first_or_initialize
+      user = where(provider: auth.provider, uid: auth.uid, circle_id: nil).first_or_initialize
+      user.email ||= auth.info.email
+      generated_password = Devise.friendly_token[0, 20]
+      user.password = generated_password
+      user.password_confirmation = generated_password
+      user.name ||= auth.info.name
+
+      Rails.logger.error "Save failed: #{user.errors.full_messages}" unless user.save
+      user
+    end
+
+    def from_omniauth_for_circle(auth, circle)
+      user = where(provider: auth.provider, uid: auth.uid, circle_id: circle.id).first_or_initialize
+      user.circle = circle
       user.email ||= auth.info.email
       generated_password = Devise.friendly_token[0, 20]
       user.password = generated_password

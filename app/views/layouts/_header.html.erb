@@ -1,12 +1,17 @@
 <header class="header">
+  <h1 class="logo<%= ' logo--circle' if circle_mode? %>">
+    <%= link_to 'Quotes Journaling', circle_mode? ? circle_quotes_path(current_circle) : root_path %>
+  </h1>
+
   <% if circle_mode? %>
-    <%= link_to circle_members_path(current_circle), class: "circle-info" do %>
-      <strong class="circle-name"><%= current_circle.name %></strong>
-      <span class="circle-member-count">メンバー <%= current_circle.member_count %>人</span>
-    <% end %>
-  <% else %>
-    <h1><%= link_to 'Quotes Journaling', root_path %></h1>
+    <div class="circle-info-center">
+      <%= link_to circle_members_path(current_circle) do %>
+        <strong class="circle-name"><%= current_circle.name %></strong>
+        <span class="circle-member-count">メンバー <%= current_circle.member_count %>人</span>
+      <% end %>
+    </div>
   <% end %>
+
   <% if user_signed_in? %>
     <div class="header-menu">
       <% unless circle_mode? %>
