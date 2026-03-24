@@ -3,6 +3,21 @@
 
   <%= render 'shared/error_messages', object: @user %>
 
+  <%# Googleで参加 %>
+  <div class="google-join-section">
+    <%= form_with url: circle_join__google_oauth_path(join_token: @circle.join_token), method: :post, local: true do |f| %>
+      <div>
+        <%= label_tag :circle_password, 'サークルパスワード *' %><br>
+        <%= password_field_tag :circle_password, nil, class: "form-control" %>
+      </div><br>
+      <div>
+        <%= f.submit 'Googleアカウントで参加する', class: "btn btn-outline-light w-100" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="divider my-4">または メールアドレスで登録</div>
+
   <%= form_with model: @user, url: circle_join_signup_path(join_token: @circle.join_token), method: :post, local: true do |f| %>
     <div>
       <%= f.label :name, '名前 *' %><br>

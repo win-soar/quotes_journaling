@@ -23,6 +23,17 @@ class Circles::RegistrationsController < ApplicationController
     end
   end
 
+  def google_oauth
+    unless @circle.authenticate_circle_password(params[:circle_password])
+      @user = User.new
+      @user.errors.add(:base, 'サークルパスワードが正しくありません')
+      return render :new, status: :unprocessable_entity
+    end
+
+    session[:circle_join_token] = @circle.join_token
+    redirect_to user_google_oauth2_omniauth_authorize_path
+  end
+
   private
 
   def set_circle
