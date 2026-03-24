@@ -6,7 +6,7 @@ class QuotesController < ApplicationController
   end
 
   def index
-    @quotes = Quote.includes(:user).order(created_at: :desc).page(params[:page]).per(10)
+    @quotes = Quote.global.includes(:user).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def create
@@ -25,7 +25,7 @@ class QuotesController < ApplicationController
   end
 
   def show
-    @quote = Quote.find(params[:id])
+    @quote = Quote.global.find(params[:id])
     @comment = @quote.comments.build
     @comments = @quote.comments.includes(:user).order(created_at: :desc)
   end
@@ -60,7 +60,7 @@ class QuotesController < ApplicationController
   end
 
   def search_result
-    @quotes = Quote.all
+    @quotes = Quote.global
     if params[:title].present?
       @quotes = @quotes.where("title ILIKE ?", "%#{params[:title]}%")
     end
