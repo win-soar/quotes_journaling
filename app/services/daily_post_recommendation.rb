@@ -29,7 +29,7 @@ class DailyPostRecommendation
 
   def self.find_recommended_quote
     yesterday = Date.yesterday
-    quotes = Quote.where(created_at: yesterday.beginning_of_day..yesterday.end_of_day)
+    quotes = Quote.global.where(created_at: yesterday.beginning_of_day..yesterday.end_of_day)
                   .left_joins(:likes)
                   .group(:id)
                   .order('COUNT(likes.id) DESC', 'quotes.created_at ASC')
