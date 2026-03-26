@@ -1,24 +1,19 @@
 <div class="circle-members-page">
   <h2><%= @circle.name %> のメンバー（<%= @circle.member_count %>人）</h2>
 
-  <div class="members-list">
+  <div class="circle-members-grid">
     <% @members.each do |member| %>
-      <div class="member-card">
-        <%= link_to user_path(member) do %>
-          <%= avatar_image_tag(member, size: "50x50") %>
-        <% end %>
-        <div class="member-info">
-          <strong><%= member.name %></strong>
-          <% if member.bio.present? %>
-            <p class="member-bio"><%= member.bio %></p>
-          <% end %>
-          <small>参加日: <%= member.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d") %></small>
+      <%= link_to user_path(member), class: "member-avatar-card" do %>
+        <%= avatar_image_tag(member, size: "72x72") %>
+        <div class="member-tooltip">
+          <strong><%= member.name %></strong><br>
+          参加 <%= member.created_at.in_time_zone('Tokyo').strftime("%Y/%m/%d") %>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 
   <div class="return-button">
-    <%= link_to "フィードに戻る", circle_quotes_path(current_circle), class: "btn btn-secondary" %>
+    <%= link_to "← フィードに戻る", circle_quotes_path(current_circle), class: "btn btn-outline-light btn-sm" %>
   </div>
 </div>

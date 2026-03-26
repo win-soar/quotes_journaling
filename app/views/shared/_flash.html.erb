@@ -8,3 +8,11 @@
     <%= message %>
   </div>
 <% end %>
+
+<script>
+  document.querySelectorAll('.flash-message').forEach(function(el) {
+    el.addEventListener('animationend', function(e) {
+      if (e.animationName === 'fadeOut') el.remove();
+    });
+  });
+</script>

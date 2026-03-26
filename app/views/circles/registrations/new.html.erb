@@ -1,52 +1,52 @@
-<div class="register-page">
-  <h2><%= @circle.name %> に参加する</h2>
+<div class="circle-auth-container">
+  <h2><%= @circle.name %> に参加</h2>
 
-  <%= render 'shared/error_messages', object: @user %>
-
-  <%# Googleで参加 %>
-  <div class="google-join-section">
-    <p style="margin-bottom: 12px; font-size: 0.95rem; opacity: 0.85;">
-      Googleアカウントで参加する場合、Google認証後にサークルパスワードを入力します。
-    </p>
-    <%= link_to circle_join__google_oauth_path(join_token: @circle.join_token),
-                class: "btn btn-outline-light w-100" do %>
-      Googleアカウントで参加する
-    <% end %>
-  </div>
-
-  <div class="divider my-4">または メールアドレスで登録</div>
-
-  <%= form_with model: @user, url: circle_join_signup_path(join_token: @circle.join_token), method: :post, local: true do |f| %>
-    <div>
-      <%= f.label :name, '名前 *' %><br>
-      <%= f.text_field :name, class: "form-control" %>
-    </div><br>
-
-    <div>
-      <%= f.label :email, 'メールアドレス *' %><br>
-      <%= f.email_field :email, class: "form-control" %>
-    </div><br>
-
-    <div>
-      <%= f.label :password, 'パスワード（6文字以上）*' %><br>
-      <%= f.password_field :password, class: "form-control" %>
-    </div><br>
-
-    <div>
-      <%= f.label :password_confirmation, 'パスワード（確認）*' %><br>
-      <%= f.password_field :password_confirmation, class: "form-control" %>
-    </div><br>
-
-    <div>
-      <%= label_tag :circle_password, 'サークルパスワード *' %><br>
-      <%= password_field_tag :circle_password, nil, class: "form-control" %>
-    </div><br>
-
-    <div>
-      <%= f.submit '参加する', class: "btn btn-primary" %>
+  <% if @user&.errors&.any? %>
+    <div style="background: rgba(200,0,0,0.2); border-left: 3px solid #f8192b; border-radius: 6px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.9rem; font-family: 'Noto Sans JP', sans-serif;">
+      <% @user.errors.full_messages.each do |msg| %>
+        <div><%= msg %></div>
+      <% end %>
     </div>
   <% end %>
 
-  <br>
-  <p>すでにアカウントをお持ちの方は <%= link_to 'こちらからログイン', circle_join__login_path(join_token: @circle.join_token) %></p>
+  <%= link_to circle_join__google_oauth_path(join_token: @circle.join_token), class: "btn-google" do %>
+    Googleアカウントで参加する
+  <% end %>
+
+  <div class="circle-auth-divider">または</div>
+
+  <%= form_with model: @user, url: circle_join_signup_path(join_token: @circle.join_token), method: :post, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :name, '名前 *' %>
+      <%= f.text_field :name, class: "form-control", placeholder: "表示名" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, 'メールアドレス *' %>
+      <%= f.email_field :email, class: "form-control", placeholder: "example@email.com" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, 'パスワード（6文字以上）*' %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, 'パスワード（確認）*' %>
+      <%= f.password_field :password_confirmation, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= label_tag :circle_password, 'サークルパスワード *' %>
+      <%= password_field_tag :circle_password, nil, class: "form-control" %>
+    </div>
+
+    <%= f.submit '参加する', class: "btn btn-primary" %>
+  <% end %>
+
+  <div class="circle-auth-footer">
+    すでにアカウントをお持ちの方は<br>
+    <%= link_to 'ログインはこちら', circle_join__login_path(join_token: @circle.join_token),
+                class: "btn btn-outline-light btn-sm mt-2" %>
+  </div>
 </div>
