@@ -22,6 +22,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+
+    # サークルユーザーのページは同じサークルのメンバーのみ閲覧可能
+    if @user.circle_user?
+      unless current_user&.circle_id == @user.circle_id
+        redirect_to root_path, alert: 'このページは閲覧できません'
+        return
+      end
+    end
+
     @quotes = @user.quotes.order(created_at: :desc)
   end
 
