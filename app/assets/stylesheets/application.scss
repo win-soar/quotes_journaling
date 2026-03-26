@@ -8,8 +8,14 @@ body {
   background-color: #4E5977;
   font-size: 16px;
   color: #ffffff;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Noto Serif JP", "Times New Roman", serif;
   margin: 0;
+}
+
+// UI要素はサンセリフ
+.header, .footer, .btn, .dropdown-menu, .flash-message,
+input, textarea, select, label, .form-control {
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 a {
@@ -181,19 +187,142 @@ body > hr {
 // ===== 静的ページ =====
 
 .static-page {
-  margin-left: 20px;
-  margin-right: 20px;
-
   .underline {
     text-decoration: underline;
   }
 
   .example-image {
-    width: 50%;
+    width: 100%;
+    max-width: 560px;
     height: auto;
-    outline: 3px solid #e49898ff;
-    margin-top: 5px;
+    border-radius: 10px;
+    outline: 3px solid #e49898;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    display: block;
+  }
+}
+
+// ガイドページ
+.guide-page {
+  padding-bottom: 40px;
+
+  .guide-intro {
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    line-height: 1.9;
+
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.05rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+  }
+
+  .guide-section {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px 28px;
     margin-bottom: 20px;
+    line-height: 1.85;
+
+    .guide-section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+
+      .guide-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        font-family: "Noto Sans JP", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+      }
+    }
+
+    p {
+      margin: 0 0 8px 0;
+      font-size: 0.98rem;
+    }
+
+    ol, ul {
+      padding-left: 1.4em;
+      margin: 10px 0;
+
+      li {
+        margin-bottom: 8px;
+        line-height: 1.8;
+        font-size: 0.97rem;
+      }
+    }
+
+    ul.guide-subitems {
+      margin-top: 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 12px 12px 12px 28px;
+
+      li {
+        margin-bottom: 6px;
+
+        strong {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .guide-note {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-family: "Noto Sans JP", sans-serif;
+
+      &--warning {
+        background: rgba(248, 25, 43, 0.15);
+        border-left: 3px solid #f8192b;
+        color: #ffd0d4;
+      }
+
+      &--line {
+        background: rgba(0, 195, 0, 0.12);
+        border-left: 3px solid #06c755;
+        color: #c8f5cb;
+      }
+    }
+
+    .guide-image-caption {
+      font-size: 0.85rem;
+      opacity: 0.65;
+      margin-top: 6px;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+  }
+
+  .guide-back {
+    margin-top: 8px;
   }
 }
 
