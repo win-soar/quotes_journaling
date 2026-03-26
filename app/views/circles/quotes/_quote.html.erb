@@ -1,5 +1,5 @@
-<div class="quote-card mb-3 p-3 quote-category--<%= quote.category.downcase.gsub(' ', '-') %>">
-  <div class="quote-user">
+<div class="quote-card mb-3 p-3 quote-category--<%= quote.category.downcase.gsub(' ', '-') %>" style="position: relative;">
+  <div class="quote-user" style="position: relative; z-index: 1;">
     <%= link_to user_path(quote.user) do %>
       <%= avatar_image_tag(quote.user, size: "44x44") %>
     <% end %>
@@ -9,12 +9,12 @@
   </div>
 
   <blockquote class="quote-body">
-    <%= link_to "\"#{quote.title}\"", circle_quote_path(current_circle, quote) %>
+    <%= link_to "\"#{quote.title}\"", circle_quote_path(current_circle, quote), class: "stretched-link" %>
   </blockquote>
 
   <p class="quote-author">— <%= quote.author %></p>
 
-  <div class="quote-footer">
+  <div class="quote-footer" style="position: relative; z-index: 1;">
     <%= render partial: "circles/quotes/like_button", locals: { quote: quote } %>
 
     <span class="quote-date"><%= quote.created_at.in_time_zone('Tokyo').strftime("%Y/%m/%d %H:%M") %></span>
