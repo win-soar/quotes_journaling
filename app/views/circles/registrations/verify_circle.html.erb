@@ -1,0 +1,25 @@
+<div class="register-page">
+  <h2><%= @circle.name %> のサークルパスワードを入力</h2>
+
+  <p style="margin-bottom: 20px; opacity: 0.85;">
+    Googleアカウントの認証が完了しました。<br>
+    このサークルに参加するには、サークルパスワードを入力してください。
+  </p>
+
+  <% if flash[:alert] %>
+    <div class="flash-message alert" style="position: static; max-width: 100%; margin-bottom: 16px;">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <%= form_with url: circle_join__verify_circle_path(join_token: @circle.join_token), method: :post, local: true do |f| %>
+    <div>
+      <%= label_tag :circle_password, 'サークルパスワード *' %><br>
+      <%= password_field_tag :circle_password, nil, class: "form-control" %>
+    </div><br>
+
+    <div>
+      <%= f.submit '参加する', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

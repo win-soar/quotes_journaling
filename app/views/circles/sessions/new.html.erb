@@ -22,5 +22,13 @@
   <% end %>
 
   <br>
+  <div class="google-join-section">
+    <%= link_to circle_join__google_oauth_path(join_token: @circle.join_token),
+                class: "btn btn-outline-light w-100" do %>
+      Googleアカウントでログイン
+    <% end %>
+  </div>
+
+  <br>
   <p>アカウントをお持ちでない方は <%= link_to 'こちらから新規登録', circle_join__signup_path(join_token: @circle.join_token) %></p>
 </div>

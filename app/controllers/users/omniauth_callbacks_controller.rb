@@ -7,16 +7,29 @@ module Users
 
       if (join_token = session.delete(:circle_join_token))
         circle = Circle.find_by(join_token: join_token)
-        @user = circle ? User.from_omniauth_for_circle(auth, circle) : User.from_omniauth(auth)
-      else
-        @user = User.from_omniauth(auth)
-      end
 
-      if @user.persisted?
-        sign_in_and_redirect @user, event: :authentication
-        flash[:notice] = "Googleアカウントでログインしました。"
+        if circle
+          existing = User.find_by(provider: auth.provider, uid: auth.uid, circle_id: circle.id)
+
+          if existing
+            # 既存サークルメンバー → そのままログイン
+            sign_in_and_redirect existing, event: :authentication
+            flash[:notice] = "Googleアカウントでログインしました。"
+          else
+            # 新規 → circle パスワード検証ページへ
+            session[:circle_oauth_data] = {
+              'provider' => auth.provider,
+              'uid'      => auth.uid,
+              'email'    => auth.info.email,
+              'name'     => auth.info.name
+            }
+            redirect_to circle_join__verify_circle_path(join_token: circle.join_token)
+          end
+        else
+          sign_in_global(auth)
+        end
       else
-        redirect_to root_path, alert: "認証に失敗しました: #{@user.errors.full_messages.join(', ')}"
+        sign_in_global(auth)
       end
     end
 
@@ -29,6 +42,18 @@ module Users
         line_display_name: auth.info.name
       )
       redirect_to user_path(current_user), notice: 'LINEアカウントと連携しました'
+    end
+
+    private
+
+    def sign_in_global(auth)
+      user = User.from_omniauth(auth)
+      if user.persisted?
+        sign_in_and_redirect user, event: :authentication
+        flash[:notice] = "Googleアカウントでログインしました。"
+      else
+        redirect_to root_path, alert: "認証に失敗しました: #{user.errors.full_messages.join(', ')}"
+      end
     end
   end
 end
