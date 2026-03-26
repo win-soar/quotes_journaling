@@ -25,9 +25,9 @@ a {
 
 // コンテンツ幅制限（SNS風フィード）
 .page-container {
-  max-width: 680px;
+  width: 75%;
   margin: 0 auto;
-  padding: 16px 16px 80px;
+  padding: 16px 0 80px;
 }
 
 // ランディング・ログインページではコンテナを無効化
