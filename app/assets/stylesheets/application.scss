@@ -2,36 +2,59 @@
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "autocomplete";
 
-//全体のレイアウト
+// ===== 全体レイアウト =====
 
 body {
   background-color: #4E5977;
   font-size: 16px;
   color: #ffffff;
-  font-family: "Times New Roman", serif;
+  font-family: "Noto Serif JP", "Times New Roman", serif;
   margin: 0;
 }
 
-//文字は白色にする
+// UI要素はサンセリフ
+.header, .footer, .btn, .dropdown-menu, .flash-message,
+input, textarea, select, label, .form-control {
+  font-family: "Noto Sans JP", sans-serif;
+}
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
-//header用
+// コンテンツ幅制限（SNS風フィード）
+.page-container {
+  width: 75%;
+  margin: 0 auto;
+  padding: 16px 0 80px;
+}
+
+// ランディング・ログインページではコンテナを無効化
+body:has(.main-page, .login-page) .page-container {
+  max-width: none;
+  padding: 0;
+}
+
+// ===== ヘッダー =====
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-decoration: underline;
-  margin-left: 20px;
+  padding: 10px 20px;
   font-weight: bold;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #3d4763;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .logo {
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+
   a { color: inherit; }
 
   &--circle a {
@@ -54,73 +77,72 @@ a {
 }
 
 .circle-name {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 .circle-member-count {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: normal;
+  opacity: 0.8;
 }
 
 .header-menu {
   display: flex;
   align-items: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  gap: 4px;
 
   a {
-    margin-left: 30px;
-  }
-}
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background-color 0.15s;
 
-// サークル登録ページ
-.google-join-section {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 8px;
-}
-
-.divider {
-  text-align: center;
-  font-size: 0.9rem;
-  opacity: 0.7;
-  position: relative;
-
-  &::before, &::after {
-    content: '';
-    display: inline-block;
-    width: 30%;
-    height: 1px;
-    background: currentColor;
-    vertical-align: middle;
-    margin: 0 8px;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
   }
 }
 
 .search-icon {
-  width: 50px;
-  height: 50px;
-  margin-right: 40px;
+  width: 36px;
+  height: 36px;
 }
 
-//footer用
+// ヘッダー直後の hr を非表示
+.header + hr {
+  display: none;
+}
+
+// ===== フッター =====
 
 .footer {
-  text-decoration: underline;
-  margin: 20px;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   a {
-    &:first-child {
-      margin-left: 0;
-    }
-    &:last-child {
-      margin-left: 15px;
+    margin: 0 10px;
+
+    &:hover {
+      opacity: 1;
+      text-decoration: underline;
     }
   }
 }
 
-// フラッシュメッセージ用スタイル
+// フッター上の hr を非表示
+hr + .footer,
+hr:last-of-type {
+  display: none;
+}
+
+body > hr {
+  display: none;
+}
+
+// ===== フラッシュメッセージ =====
 
 .flash-message {
   position: fixed;
@@ -129,20 +151,20 @@ a {
   z-index: 1000;
   max-width: 300px;
   padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  animation: slideIn 0.5s, fadeOut 0.5s 5s forwards;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  animation: slideIn 0.3s ease, fadeOut 0.5s 5s forwards;
 
   &.alert {
-    background-color: #f8192b;
-    color: #f8d1d4;
-    border: 1px solid #f8d1d4;
+    background-color: #c62828;
+    color: #ffdede;
+    border: 1px solid rgba(255,255,255,0.2);
   }
 
   &.notice {
-    background-color: #019e25;
-    color: #c3e6cb;
-    border: 1px solid #c3e6cb;
+    background-color: #2e7d32;
+    color: #c8f5cb;
+    border: 1px solid rgba(255,255,255,0.2);
   }
 
   ul {
@@ -153,35 +175,158 @@ a {
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from { transform: translateX(110%); opacity: 0; }
+  to   { transform: translateX(0);   opacity: 1; }
 }
 
 @keyframes fadeOut {
   from { opacity: 1; }
-  to { opacity: 0; }
+  to   { opacity: 0; }
 }
 
-//静的ページ用
+// ===== 静的ページ =====
 
 .static-page {
-  margin-left: 20px;
-  margin-right: 20px;
-
   .underline {
     text-decoration: underline;
   }
 
   .example-image {
-    width: 50%;
+    width: 100%;
+    max-width: 560px;
     height: auto;
-    outline: 3px solid #e49898ff;
-    margin-top: 5px;
-    margin-bottom: 20px;
+    border-radius: 10px;
+    outline: 3px solid #e49898;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    display: block;
   }
 }
 
-//メインページのレイアウト
+// ガイドページ
+.guide-page {
+  padding-bottom: 40px;
+
+  .guide-intro {
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    line-height: 1.9;
+
+    h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.05rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+  }
+
+  .guide-section {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    line-height: 1.85;
+
+    .guide-section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+
+      .guide-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        font-family: "Noto Sans JP", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+      }
+    }
+
+    p {
+      margin: 0 0 8px 0;
+      font-size: 0.98rem;
+    }
+
+    ol, ul {
+      padding-left: 1.4em;
+      margin: 10px 0;
+
+      li {
+        margin-bottom: 8px;
+        line-height: 1.8;
+        font-size: 0.97rem;
+      }
+    }
+
+    ul.guide-subitems {
+      margin-top: 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 12px 12px 12px 28px;
+
+      li {
+        margin-bottom: 6px;
+
+        strong {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .guide-note {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-family: "Noto Sans JP", sans-serif;
+
+      &--warning {
+        background: rgba(248, 25, 43, 0.15);
+        border-left: 3px solid #f8192b;
+        color: #ffd0d4;
+      }
+
+      &--line {
+        background: rgba(0, 195, 0, 0.12);
+        border-left: 3px solid #06c755;
+        color: #c8f5cb;
+      }
+    }
+
+    .guide-image-caption {
+      font-size: 0.85rem;
+      opacity: 0.65;
+      margin-top: 6px;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+  }
+
+  .guide-back {
+    margin-top: 8px;
+  }
+}
+
+// ===== ランディングページ =====
 
 body:has(.main-page, .login-page) header {
   display: none;
@@ -239,7 +384,7 @@ body:has(.main-page, .login-page) header {
   }
 }
 
-//ログインページのレイアウト
+// ===== ログインページ =====
 
 .login-page {
   h2 {
@@ -273,8 +418,8 @@ body:has(.main-page, .login-page) header {
       padding: 12px;
       width: 100%;
       max-width: 400px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
     }
   }
 
@@ -283,10 +428,9 @@ body:has(.main-page, .login-page) header {
     justify-content: center;
     padding: 30px;
   }
-
 }
 
-// カテゴリごとの背景色クラス
+// ===== クォーツカード =====
 
 div.quote-card {
   color: #000000;
@@ -295,22 +439,27 @@ div.quote-card {
 .quote-category {
   &--historical {
     background-color: #d6f8c1;
-    border-left: 4px solid #ffffff;
   }
-
   &--celebrity {
     background-color: #f8c1c1;
-    border-left: 4px solid #ffffff;
   }
-
   &--fictional {
     background-color: #c1ddf8;
-    border-left: 4px solid #ffffff;
   }
-
   &--original {
     background-color: #f8e9c1;
-    border-left: 4px solid #ffffff;
+  }
+}
+
+.quote-card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
   }
 }
 
@@ -326,147 +475,190 @@ div.quote-card {
   margin-right: 10px;
 }
 
-// 投稿アイコン
+// ===== クォーツカード内レイアウト =====
 
-.fab {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: box-shadow 0.2s;
-  text-decoration: none;
-}
-
-.fab:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-}
-
-.fab-icon {
-  width: 50px;
-  height: 50px;
-}
-
-//quoteのレイアウト
 .quote-user {
   display: flex;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .quote-user-name {
-  margin-top: 10px;
-  margin-left: 20px;
-  align-self: center;
-  font-size: 1.2rem;
-  font-weight: bold;
+  margin: 0 0 0 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .quote-body {
-  margin-left: 30px;
-  margin-right: 30px;
-  font-size: 1.5rem;
+  margin: 8px 12px;
+  font-size: 1.3rem;
   font-weight: bold;
+  line-height: 1.5;
 }
 
 .quote-author {
-  margin-left: 30px;
-  margin-right: 30px;
+  margin: 4px 12px 8px;
+  font-size: 0.9rem;
+  opacity: 0.75;
 }
 
 .quote-footer {
   display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
 
   .x-share-icon {
-    width: 30px;
-    height: 30px;
-    margin-left: 50px;
-    margin-right: 50px;
+    width: 24px;
+    height: 24px;
   }
 }
 
-// 投稿詳細ページのレイアウト
-.quote-of-user {
-  display: flex;
-  margin-left: 30px;
+.quote-date {
+  margin-left: auto;
+  font-size: 0.8rem;
+  opacity: 0.65;
+}
 
-  h4 {
-    align-self: center;
-    margin-left: 20px;
+// ===== 投稿詳細ページ =====
+
+.quote-detail-header {
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+
+  h2 {
+    font-size: 1.6rem;
     font-weight: bold;
+    margin: 0;
+  }
+}
+
+.quote-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  .quote-meta-name {
+    font-weight: 600;
+    font-size: 1rem;
   }
 
-  .quote-of-user-buttons {
-    display: flex;
-    align-self: flex-end;
+  .quote-meta-actions {
     margin-left: auto;
-    margin-right: 20px;
+    display: flex;
+    gap: 8px;
   }
-
 }
 
 .quote-info {
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
-  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+
+  .info-row {
+    display: flex;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.95rem;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .info-label {
+      font-weight: 600;
+      min-width: 80px;
+      opacity: 0.75;
+      flex-shrink: 0;
+    }
+  }
+
+  .note-content {
+    margin-top: 8px;
+    line-height: 1.7;
+  }
 }
 
+.section-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin: 20px 0;
+}
+
+// コメント
 .comment-form {
   display: flex;
-  flex-direction: row;
+  gap: 12px;
   align-items: flex-start;
-  justify-content: flex-start;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-bottom: 16px;
 
   textarea {
-    width: 75vw;
-    flex: auto;
-    margin-bottom: 10px;
+    flex: 1;
+    margin-bottom: 8px;
+  }
+}
+
+.comment-of-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+
+  p {
+    font-weight: 600;
+    margin: 0;
   }
 }
 
 .return-button {
-  margin-top: 30px;
-  margin-left: 30px;
+  margin-top: 20px;
 }
 
-// コメントレイアウト用
+// ===== 投稿フォーム =====
 
-.comment-of-user {
+.quote-form-title {
   display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
 
-  p {
-    align-self: center;
-    margin-left: 20px;
-    font-weight: bold;
+  h6 {
+    opacity: 0.7;
+    font-size: 0.85rem;
   }
 }
 
-// クォーツ投稿フォーム
-
 .quote-form {
-  margin-left: 30px;
-  margin-right: 30px;
-
+  .form-control,
   .text-field {
-    width:75vw;
-    flex: auto;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: #ffffff;
+
+    &:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.12);
+    }
+
+    &::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
   }
 
   input[type="radio"] + label {
-    font-size: 2rem !important;
+    font-size: 1.2rem !important;
     display: inline-block !important;
-    margin-right: 1em !important;
+    margin-right: 0.75em !important;
   }
 
   input[type="radio"] {
@@ -474,78 +666,46 @@ div.quote-card {
 
     + label {
       display: inline-block;
-      font-size: 2rem;
-      margin-right: 1em;
-      padding: 2px 8px;
+      font-size: 1.2rem;
+      margin-right: 0.75em;
+      padding: 4px 12px;
+      border-radius: 20px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.2s;
+      border: 1px solid transparent;
 
       &:hover {
-        background-color: #f0f0f0;
-        color: #000000;
-        border-radius: 4px;
+        background-color: rgba(255,255,255,0.15);
       }
     }
 
     &:checked + label {
-      background-color: #e0e0e0;
-      border-radius: 4px;
+      background-color: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.3);
     }
   }
-  input[type="radio"][value="historical"]:checked + label {
-    background-color: #d6f8c1;
-    color: #000000;
-  }
-  input[type="radio"][value="celebrity"]:checked + label {
-    background-color: #f8c1c1;
-    color: #000000;
-  }
-  input[type="radio"][value="fictional"]:checked + label {
-    background-color: #c1ddf8;
-    color: #000000;
-  }
-  input[type="radio"][value="original"]:checked + label {
-    background-color: #f8e9c1;
-    color: #000000;
-  }
+  input[type="radio"][value="historical"]:checked + label { background-color: #d6f8c1; color: #000; border-color: #a8d48a; }
+  input[type="radio"][value="celebrity"]:checked  + label { background-color: #f8c1c1; color: #000; border-color: #d48a8a; }
+  input[type="radio"][value="fictional"]:checked  + label { background-color: #c1ddf8; color: #000; border-color: #8ab0d4; }
+  input[type="radio"][value="original"]:checked   + label { background-color: #f8e9c1; color: #000; border-color: #d4c28a; }
 
   .field_with_errors {
     display: contents !important;
 
-    > div {
-      display: inline !important;
-    }
+    > div { display: inline !important; }
 
-    label {
-      color: #ff6b6b !important;
-    }
+    label { color: #ff6b6b !important; }
 
     input[type="radio"] + label {
-      font-size: 2rem !important;
+      font-size: 1.2rem !important;
       display: inline-block !important;
-      margin-right: 1em !important;
+      margin-right: 0.75em !important;
       color: #000000 !important;
-
-      /* 選択時のスタイルも継承 */
-      &[for^="category_"] {
-        background-color: inherit;
-      }
     }
   }
 }
 
-.quote-form-title {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  margin-left: 30px;
-
-  h6 {
-    margin-left: 40px;
-  }
-}
-
-// ツールチップスタイル
+// ツールチップ
 label[for^="category_"] {
   position: relative;
 
@@ -555,16 +715,17 @@ label[for^="category_"] {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: #333;
+    background: #222;
     color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 1rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.2s;
     white-space: nowrap;
     pointer-events: none;
-    margin-top: 10px;
+    margin-top: 6px;
+    z-index: 10;
   }
 
   &:hover::after {
@@ -572,141 +733,211 @@ label[for^="category_"] {
   }
 }
 
-// クォーツ検索用
+// ===== 投稿ボタン（FAB）=====
+
+.fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  transition: box-shadow 0.2s, transform 0.15s;
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    transform: scale(1.06);
+  }
+}
+
+.fab-icon {
+  width: 28px;
+  height: 28px;
+}
+
+// ===== 検索 =====
 
 .quote-search {
-  margin-left: 30px;
-  margin-right: 30px;
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   .checkboxItem {
     display: inline-flex;
     align-items: center;
-    column-gap: 10px;
+    column-gap: 8px;
     line-height: 1;
     cursor: pointer;
   }
 
   .checkboxItem:not(:last-of-type) {
-    margin-right: 16px;
+    margin-right: 12px;
   }
 }
 
 .search-item {
-  margin-right: 20px;
+  margin-right: 16px;
 }
 
 .search-header {
   display: flex;
   align-items: end;
   justify-content: flex-start;
-
-  p {
-    margin-left: 20px;
-  }
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .text-field {
-  width: 50vw;
-  flex: auto;
-  border-radius: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255,255,255,0.5);
+  }
 }
 
-// ランキング用
+// ===== ランキング =====
 
 .ranking-title {
   text-align: center;
+  margin-bottom: 16px;
 }
 
-// ユーザーページ用
+// ===== ユーザープロフィール =====
 
-.user-infomation {
+.user-profile-card {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  margin-left: 30px;
-  margin-right: 30px;
+  gap: 16px;
 
   .user-name {
-    margin-left: 20px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
   }
 
   .user-action {
-    align-items: flex-end;
     margin-left: auto;
-    margin-right: 200px;
   }
 }
 
 .user-bio {
-  margin: 30px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
-// プロフィール編集画面用
+.section-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.7;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
 
+// プロフィール編集
 .user-edit {
-  margin-left: 30px;
-  margin-right: 30px;
+  padding: 0;
+
+  .form-control {
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+    color: #fff;
+
+    &:focus {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.5);
+    }
+  }
 }
 
 .dropdown-item.text-line {
   color: #070707 !important;
   background-color: #bbfcb9 !important;
 }
-
 .dropdown-item.text-line:hover {
   background-color: #a6e6b9 !important;
 }
-
 .dropdown-item.text-danger {
   color: #dc3545 !important;
   background-color: #e9d2d4 !important;
 }
-
 .dropdown-item.text-danger:hover {
   background-color: #e6b9bc !important;
 }
 
-// 通報用
+// ===== 通報 =====
 
 .report-form {
-  margin-left: 30px;
-  margin-right: 30px;
+  padding: 0;
 }
 
-// ログインページ用
+// ===== ログインオプション =====
 
 .login-option {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-decoration: underline;
 }
 
 .login-with-google {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
 
   p {
     padding-top: 8px;
   }
 }
 
+// ===== 登録ページ =====
+
 .register-page {
-  margin-left: 30px;
-  margin-right: 30px;
+  padding: 0;
 
   h2 {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-size: 1.5rem;
   }
 
   .form-control {
-    width: 75vw;
-    flex: auto;
-    border-radius: 10px;
-    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+    color: #fff;
+
+    &:focus {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    &::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
   }
 
   .user-info-form {
@@ -714,7 +945,7 @@ label[for^="category_"] {
     flex-direction: column;
     margin-top: 10px;
     margin-bottom: 10px;
-    gap: 20px;
+    gap: 16px;
   }
 
   .register-underline {
@@ -723,11 +954,9 @@ label[for^="category_"] {
 }
 
 .login-with-google-register {
-  margin-left: 30px;
-  margin-right: 30px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 
   p {
     padding-top: 8px;
@@ -735,26 +964,50 @@ label[for^="category_"] {
 }
 
 .register-login-link {
-  margin-left: 30px;
-  margin-right: 30px;
   color: #f0a2a2;
   text-decoration: underline;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  display: block;
 }
 
-// パスワード再設定用
+// サークル登録
+.google-join-section {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.divider {
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.6;
+  position: relative;
+  margin: 16px 0;
+
+  &::before, &::after {
+    content: '';
+    display: inline-block;
+    width: 28%;
+    height: 1px;
+    background: currentColor;
+    vertical-align: middle;
+    margin: 0 8px;
+  }
+}
+
+// ===== パスワード再設定 =====
 
 .password-reset-form {
-  margin: 30px;
+  padding: 0;
 
   .form-control {
-    width: 75vw;
-    flex: auto;
-    border-radius: 10px;
-    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px 12px;
   }
 
   h2 {
-    margin-bottom: 30px;
+    margin-bottom: 24px;
   }
 }
