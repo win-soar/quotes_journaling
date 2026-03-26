@@ -1,5 +1,5 @@
-<div class="quote-card mb-3 p-3 quote-category--<%= quote.category.downcase.gsub(' ', '-') %>">
-  <div class="quote-user">
+<div class="quote-card mb-3 p-3 quote-category--<%= quote.category.downcase.gsub(' ', '-') %>" style="position: relative;">
+  <div class="quote-user" style="position: relative; z-index: 1;">
     <%= link_to user_path(quote.user) do %>
       <%= avatar_image_tag(quote.user, size: "44x44") %>
     <% end %>
@@ -9,15 +9,15 @@
   </div>
 
   <blockquote class="quote-body">
-    <%= link_to "\"#{quote.title}\"", quote_path(quote) %>
+    <%= link_to "\"#{quote.title}\"", quote_path(quote), class: "stretched-link" %>
   </blockquote>
 
   <p class="quote-author">— <%= quote.author %></p>
 
-  <div class="quote-footer">
+  <div class="quote-footer" style="position: relative; z-index: 1;">
     <%= render partial: "likes/like_button", locals: { quote: quote } %>
 
-    <%= link_to "https://x.com/share?url=#{quote_url(quote)}/&text=【Quotes%20Journalingでの名言】%0a#{quote.user.name}%20さんの投稿%0a%0a\"#{quote.title}\"%0a%20-%20#{quote.author}%0a%0a", target: "_blank" do %>
+    <%= link_to "https://x.com/share?url=#{quote_url(quote)}/&text=【Quotes%20Journalingでの名言】%0a#{quote.user.name}%20さんの投稿%0a%0a\"#{quote.title}\"%0a%20-%20#{quote.author}%0a%0a", target: "_blank", style: "position: relative; z-index: 1;" do %>
       <%= image_tag("twitter.png", alt: "X", class: "x-share-icon") %>
     <% end %>
 

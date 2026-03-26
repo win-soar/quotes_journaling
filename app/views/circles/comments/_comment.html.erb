@@ -1,0 +1,12 @@
+<div class="comment border rounded p-2 my-2">
+  <div class="comment-of-user">
+    <%= avatar_image_tag(comment.user) %>
+    <p><%= link_to comment.user.name, user_path(comment.user) %></p>
+  </div>
+  <p><%= comment.body %></p>
+  <p class="text small"><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></p>
+
+  <% if comment.user != current_user %>
+    <%= link_to '通報', new_circle_quote_comment_report_path(current_circle, comment.quote_id, comment.id), class: 'btn btn-warning btn-sm' %>
+  <% end %>
+</div>
